@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.67.0 with theme Tranquilpeak 0.4.7-BETA">
+<meta name="author" content="周周">
+<meta name="keywords" content="tech">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="集合框架知识小结">
+<meta name="twitter:title" content="集合框架知识小结">
+<meta property="og:url" content="https://xhzhouup.github.io/2020/02/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E7%9F%A5%E8%AF%86%E5%B0%8F%E7%BB%93/">
+<meta property="twitter:url" content="https://xhzhouup.github.io/2020/02/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E7%9F%A5%E8%AF%86%E5%B0%8F%E7%BB%93/">
+<meta property="og:site_name" content="周周的个人 Blog">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2020-02-12T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2020-02-12T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="java">
+    
+      <meta property="article:section" content="collection">
+    
+  
+  
+    
+      <meta property="article:tag" content="java">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=640">
+
+
+    <title>集合框架知识小结</title>
+
+    <link rel="icon" href="https://xhzhouup.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://xhzhouup.github.io/2020/02/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E7%9F%A5%E8%AF%86%E5%B0%8F%E7%BB%93/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://xhzhouup.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://xhzhouup.github.io/">周周的个人 Blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://xhzhouup.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=90" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://xhzhouup.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=110" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">周周</h4>
+        
+          <h5 class="sidebar-profile-bio">Day Day Up , 向前迈进。</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://me.csdn.net/weixin_42508999" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-link"></i>
+      
+      <span class="sidebar-button-desc">CSDN</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/xhzhouup" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.weibo.com/zxh67" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-weibo"></i>
+      
+      <span class="sidebar-button-desc">Weibo</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      集合框架知识小结
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-02-12T00:00:00Z">
+        
+  二月 12, 2020
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://xhzhouup.github.io/categories/java">java</a>, 
+    
+      <a class="category-link" href="https://xhzhouup.github.io/categories/collection">collection</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <h2 id="集合框架">集合框架</h2>
+<p>集合框架是为表示和操作集合而规定的一种统一的标准的体系结构，提供了一套性能优良使用方便的接口和类，位于java.util包中，Java中的集合框架主要分为两部分：Collection和Map。</p>
+<h2 id="collection和map">Collection和Map</h2>
+<p>1.Collection是单列集合，只能存储一种类型的元素；Map是双列集合，使用键值对存储元素，键与值一一对应。<br>
+2.Collection下是List、Set、Queue（极少使用）子接口；Map下是AbstractMap和SortedMap子接口。</p>
+<h2 id="list和set">List和Set</h2>
+<p>1.List接口实现类中存储有序可重复的元素，Set接口实现类中存储无序不可重复的元素。<br>
+2.List和数组相似，可以动态增长，会影响其他元素的位置改变，查找和修改快，增删慢；Set查找和修改慢，增删快，插入和删除不会引起元素位置改变。<br>
+3.List接口的主要实现类有ArrayList、LinkedList、Vector；Set接口的主要实现类有HashSet、TreeSet、LinkedHashSet。<br>
+4.List的实现类可以存储多个null，Set的实现类最多只能包含一个null。</p>
+<h2 id="arraylistlinkedlistvector">ArrayList、LinkedList、Vector</h2>
+<p>1.存储结构：ArrayList和Vector底层为数组，默认的初始容量都为10，因此增删元素时会改变元素位置；LinkedList（JDK1.6之前为循环链表，JDK1.7取消了循环）底层为双向链表，增删元素时不会改变元素位置。<br>
+2.线程安全性：ArrayList和LinkedList是线程不安全的，Vector使用了synchronized锁，线程是安全的，但效率比ArrayList和LinkedList低。<br>
+3.扩容机制：ArrayList在JDK1.6之前，扩容后的容量是之前的1.5倍+1，JDK1.6后是之前的1.5倍；Vector默认扩容机制为2倍；LinkedList是采用链表存储方式，对容量没有要求，不需要扩容。<br>
+4.ArrayList查找和修改快，增删慢；LinkedList查找和修改慢，增删快；Vector查找、修改、增删都慢。</p>
+<h2 id="hashsettreesetlinkedhashset">HashSet、TreeSet、LinkedHashSet</h2>
+<p>1.HashSet由HashMap实现，底层为哈希表；TreeSet由TreeMap实现，底层为红黑树；LinkedHashSet继承于HashSet，是HashSet的一个“扩展版本”，会保持插入顺序。<br>
+2.三者都不是线程安全的。<br>
+3.HashSet，TreeSet不能有序增删元素，LinkedHashSet可以有序增删元素。<br>
+4.HashSet，LinkedHashSet允许有null元素，TreeSet不允许有null元素。<br>
+5.TreeSet可实现自动排序，HashSet、LinkedHashSet不能自动排序。<br>
+5.由于Set实现类大部分是由Map实现类实现，扩容机制与对应的Map实现类一致。</p>
+<h2 id="hashmaplinkedhashmaptreemapconcurrenthashmaphashtable">HashMap、LinkedHashMap、TreeMap、ConcurrentHashMap、HashTable</h2>
+<p>1.以上都是Map接口的实现类。<br>
+2.HashMap、LinkedHashMap、TreeMap线程不安全，ConcurrentHashMap、HashTable是线程安全的。<br>
+3.底层结构：</p>
+<ul>
+<li>HashMap在JDK1.8之前为数组+链表，JDK1.8后为数组+链表+红黑树，当链表长度大于阈值（默认为8）时，将链表转化为红黑树。</li>
+<li>LinkedHashMap继承自HashMap，底层结构与之相似，额外持有一个双向链表，维护插入节点的顺序。</li>
+<li>TreeMap底层为红黑树。</li>
+<li>ConcurrentHashMap在JDK1.7时为分段的数组+链表，JDK1.8后为数组+链表+红黑树。</li>
+<li>HashTable底层为数组+链表。</li>
+</ul>
+<p>4.扩容机制：</p>
+<ul>
+<li>HashMap默认的初始化大小为16。之后每次扩充，容量变为原来的2倍，也就是容量大小为2的n次方。</li>
+<li>LinkedHashMap继承自HashMap，扩容机制与HashMap一致。</li>
+<li>ConcurrentHashMap相当于HashMap的线程安全版本，扩容机制与HashMap一致。</li>
+<li>HashTable被ConcurrentHashMap取代，现在极少使用，默认的初始容量为11，每次扩充，容量变为原来的2倍+1。</li>
+</ul>
+<p>5.HashMap中，允许一个键为null，多个键所对应的值为null；而HashTable中键和值只要有一个为null就会产生NullPointException。<br>
+6.实现线程安全的方式中，ConcurrentHashMap在JDK1.7时使用的是Segment（实现了ReentrantLock可重入锁）分段锁，JDK1.8后取消了Segment分段锁，采用CAS（compare and swap，比较交换，乐观锁）和synchronized来保证并发安全；HashTable使用的是同一把锁。</p>
+<h2 id="collection和collections">Collection和Collections</h2>
+<p>1.Collection是Java中所有集合类(接口)的顶级接口，提供了对集合对象进行基本操作的通用接口方法，List和Set都继承了Collection接口。<br>
+2.Collections是操作集合的工具类，提供了一系列的静态方法，用于对集合中元素进行排序、搜索及线程安全等操作。</p>
+<h2 id="list和set的区别">List和Set的区别</h2>
+<p>List中的元素有序可重复，Set中的元素无序不可重复。</p>
+<h2 id="arraylist和linkedlist以及vector的区别">ArrayList和LinkedList以及Vector的区别</h2>
+<p>1.ArrayList和LinkedList线程不安全，Vector线程安全。<br>
+2.ArrayList和Vector底层是数组，LinkedList底层是链表。<br>
+3.ArrayList查找和修改快，增删慢；LinkedList查找和修改慢，增删块；Vector查找、修改、增删都慢。</p>
+<h2 id="hashset和treeset以及linkedhashset区别">HashSet和TreeSet以及LinkedHashSet区别</h2>
+<p>1.HashSet底层由哈希表实现，TreeSet底层由二叉树实现，LinkedHashSet底层由链表实现。<br>
+2.HashSet打印输出时无序，TreeSet和LinkedHashSet打印输出时有序。</p>
+<h2 id="hashmap和treemaphashtable的区别">HashMap和TreeMap,HashTable的区别</h2>
+<p>1.HashMap和TreeMap是线程不安全的，HashTables是线程安全的。<br>
+2.HashMap和HashTable底层是哈希表，TreeMap底层是红黑树。</p>
+<h2 id="concurrenthashmaphashmap的区别">ConcurrentHashMap,HashMap的区别</h2>
+<p>1.ConcurrentHashMap线程安全，HashMap线程不安全。</p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://xhzhouup.github.io/tags/java/">java</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/02/io/" data-tooltip="IO">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/02/helloworld%E5%85%B3%E4%BA%8Ejava%E8%B5%B7%E6%AD%A5%E9%98%B6%E6%AE%B501/" data-tooltip="HelloWorld!关于Java起步阶段01">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://xhzhouup.github.io/2020/02/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E7%9F%A5%E8%AF%86%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://xhzhouup.github.io/2020/02/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E7%9F%A5%E8%AF%86%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://xhzhouup.github.io/2020/02/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E7%9F%A5%E8%AF%86%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 周周. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/02/io/" data-tooltip="IO">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/02/helloworld%E5%85%B3%E4%BA%8Ejava%E8%B5%B7%E6%AD%A5%E9%98%B6%E6%AE%B501/" data-tooltip="HelloWorld!关于Java起步阶段01">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://xhzhouup.github.io/2020/02/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E7%9F%A5%E8%AF%86%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://xhzhouup.github.io/2020/02/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E7%9F%A5%E8%AF%86%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://xhzhouup.github.io/2020/02/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E7%9F%A5%E8%AF%86%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F02%2F%25E9%259B%2586%25E5%2590%2588%25E6%25A1%2586%25E6%259E%25B6%25E7%259F%25A5%25E8%25AF%2586%25E5%25B0%258F%25E7%25BB%2593%2F">
+          <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F02%2F%25E9%259B%2586%25E5%2590%2588%25E6%25A1%2586%25E6%259E%25B6%25E7%259F%25A5%25E8%25AF%2586%25E5%25B0%258F%25E7%25BB%2593%2F">
+          <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F02%2F%25E9%259B%2586%25E5%2590%2588%25E6%25A1%2586%25E6%259E%25B6%25E7%259F%25A5%25E8%25AF%2586%25E5%25B0%258F%25E7%25BB%2593%2F">
+          <i class="fa fa-google-plus"></i><span>分享到 Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=110" alt="作者的图片" />
+    
+    <h4 id="about-card-name">周周</h4>
+    
+      <div id="about-card-bio">Day Day Up , 向前迈进。</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Java菜鸟攻城狮
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        成都，中国
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://xhzhouup.github.io/images/timg1.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://xhzhouup.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/xhzhouup.github.io\/2020\/02\/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E7%9F%A5%E8%AF%86%E5%B0%8F%E7%BB%93\/';
+          
+            this.page.identifier = '\/2020\/02\/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E7%9F%A5%E8%AF%86%E5%B0%8F%E7%BB%93\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

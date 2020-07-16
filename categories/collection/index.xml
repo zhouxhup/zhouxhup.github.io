@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>collection on 周周的个人 Blog</title>
+    <link>https://xhzhouup.github.io/categories/collection/</link>
+    <description>Recent content in collection on 周周的个人 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Wed, 12 Feb 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://xhzhouup.github.io/categories/collection/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>集合框架知识小结</title>
+      <link>https://xhzhouup.github.io/2020/02/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E7%9F%A5%E8%AF%86%E5%B0%8F%E7%BB%93/</link>
+      <pubDate>Wed, 12 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://xhzhouup.github.io/2020/02/%E9%9B%86%E5%90%88%E6%A1%86%E6%9E%B6%E7%9F%A5%E8%AF%86%E5%B0%8F%E7%BB%93/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>

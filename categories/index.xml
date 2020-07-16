@@ -6,10 +6,28 @@
     <description>Recent content in Categories on 周周的个人 Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Wed, 25 Mar 2020 00:20:24 +0800</lastBuildDate>
+    <lastBuildDate>Mon, 25 May 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://xhzhouup.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>java</title>
+      <link>https://xhzhouup.github.io/categories/java/</link>
+      <pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://xhzhouup.github.io/categories/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>thread</title>
+      <link>https://xhzhouup.github.io/categories/thread/</link>
+      <pubDate>Sat, 11 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://xhzhouup.github.io/categories/thread/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>database</title>
@@ -30,18 +48,27 @@
     </item>
     
     <item>
-      <title>Java</title>
-      <link>https://xhzhouup.github.io/categories/java/</link>
-      <pubDate>Mon, 16 Mar 2020 19:24:54 +0800</pubDate>
+      <title>IO</title>
+      <link>https://xhzhouup.github.io/categories/io/</link>
+      <pubDate>Sun, 16 Feb 2020 00:00:00 +0000</pubDate>
       
-      <guid>https://xhzhouup.github.io/categories/java/</guid>
+      <guid>https://xhzhouup.github.io/categories/io/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>collection</title>
+      <link>https://xhzhouup.github.io/categories/collection/</link>
+      <pubDate>Wed, 12 Feb 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://xhzhouup.github.io/categories/collection/</guid>
       <description></description>
     </item>
     
     <item>
       <title>jsp</title>
       <link>https://xhzhouup.github.io/categories/jsp/</link>
-      <pubDate>Mon, 16 Mar 2020 15:51:57 +0800</pubDate>
+      <pubDate>Thu, 16 Jan 2020 15:51:57 +0800</pubDate>
       
       <guid>https://xhzhouup.github.io/categories/jsp/</guid>
       <description></description>
@@ -50,9 +77,27 @@
     <item>
       <title>随笔</title>
       <link>https://xhzhouup.github.io/categories/%E9%9A%8F%E7%AC%94/</link>
-      <pubDate>Mon, 16 Mar 2020 15:51:57 +0800</pubDate>
+      <pubDate>Thu, 16 Jan 2020 15:51:57 +0800</pubDate>
       
       <guid>https://xhzhouup.github.io/categories/%E9%9A%8F%E7%AC%94/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>exception</title>
+      <link>https://xhzhouup.github.io/categories/exception/</link>
+      <pubDate>Mon, 06 Jan 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://xhzhouup.github.io/categories/exception/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>OOP</title>
+      <link>https://xhzhouup.github.io/categories/oop/</link>
+      <pubDate>Sun, 15 Dec 2019 00:00:00 +0000</pubDate>
+      
+      <guid>https://xhzhouup.github.io/categories/oop/</guid>
       <description></description>
     </item>
     

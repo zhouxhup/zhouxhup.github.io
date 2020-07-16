@@ -1,0 +1,611 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.67.0 with theme Tranquilpeak 0.4.7-BETA">
+<meta name="author" content="周周">
+<meta name="keywords" content="tech">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="exception异常小结">
+<meta name="twitter:title" content="exception异常小结">
+<meta property="og:url" content="https://xhzhouup.github.io/2020/01/exception%E5%BC%82%E5%B8%B8%E5%B0%8F%E7%BB%93/">
+<meta property="twitter:url" content="https://xhzhouup.github.io/2020/01/exception%E5%BC%82%E5%B8%B8%E5%B0%8F%E7%BB%93/">
+<meta property="og:site_name" content="周周的个人 Blog">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2020-01-06T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2020-01-06T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="java">
+    
+      <meta property="article:section" content="exception">
+    
+  
+  
+    
+      <meta property="article:tag" content="java">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=640">
+
+
+    <title>exception异常小结</title>
+
+    <link rel="icon" href="https://xhzhouup.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://xhzhouup.github.io/2020/01/exception%E5%BC%82%E5%B8%B8%E5%B0%8F%E7%BB%93/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://xhzhouup.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://xhzhouup.github.io/">周周的个人 Blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://xhzhouup.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=90" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://xhzhouup.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=110" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">周周</h4>
+        
+          <h5 class="sidebar-profile-bio">Day Day Up , 向前迈进。</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://me.csdn.net/weixin_42508999" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-link"></i>
+      
+      <span class="sidebar-button-desc">CSDN</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/xhzhouup" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.weibo.com/zxh67" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-weibo"></i>
+      
+      <span class="sidebar-button-desc">Weibo</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      exception异常小结
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-01-06T00:00:00Z">
+        
+  一月 6, 2020
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://xhzhouup.github.io/categories/java">java</a>, 
+    
+      <a class="category-link" href="https://xhzhouup.github.io/categories/exception">exception</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <h2 id="什么是异常如何捕获异常">什么是异常？如何捕获异常？</h2>
+<p>异常（Exception）是程序可以处理的问题，使用try&hellip;catch语句块可以捕获异常。</p>
+<pre><code>try{
+    //代码块
+}catch(Exception e){
+    //捕获异常
+    e.printStackTrace();
+}
+</code></pre><h2 id="异常的类结构是怎样的错误和异常各自有什么特点">异常的类结构是怎样的？错误和异常各自有什么特点？</h2>
+<p>所有异常的父类为Throwable，下面有错误（Error）和异常（Exception）两个子类，异常分为运行时异常和编译时异常；Error是程序无法解决的问题，Exception是程序可以解决的问题。</p>
+<h2 id="异常执行的顺序是怎样的">异常执行的顺序是怎样的？</h2>
+<p>首先执行try语句块中的代码，发生异常就跳转指定的catch语句块捕获异常，如果有finally语句块会在最后执行。</p>
+<h2 id="throw和throws-的区别是什么">throw和throws 的区别是什么？</h2>
+<p>1.两者都表示抛出异常，throw作用在方法内，throws作用在方法的声明上。<br>
+2.throw用来抛出一个具体的异常，throws用来声明一个方法可能产生的所有异常。<br>
+3.throw只能抛出一个异常，throws可以抛出多个异常。<br>
+4.执行throw一定就抛出了某种异常，throws不一定抛出。</p>
+<h2 id="异常有几种如何区分">异常有几种？如何区分？</h2>
+<p>1.Exception分为运行时异常和编译时异常。<br>
+2.运行时异常是指RuntimeException类及其子类异常，程序可处理可不处理；编译时异常是指除了RuntimeException之外的异常，程序必须处理，否则编译不通过。</p>
+<h2 id="finally一般在什么时候使用是不是任何时候都会执行finally块">finally一般在什么时候使用？是不是任何时候都会执行finally块？</h2>
+<p>1.finally一般结合try&hellip;catch语句块一起使用，如果try语句块或者catch语句块中有return语句，finally语句块会在这之前执行。<br>
+2.以下几种情况不会执行finally语句块</p>
+<ul>
+<li>程序在未进入try代码块之前就发生异常。</li>
+<li>try代码块中调用<code>System.exit(0);</code>强制退出程序。</li>
+</ul>
+<h2 id="trycatchfinally执行顺序-以及finalfinally和finalize的区别">try、catch、finally执行顺序 以及final、finally和finalize的区别</h2>
+<p>1.代码块中没有return语句的时候，按照try-catch(有异常的话)-finally执行。<br>
+2.代码块中有return语句的时候，先执行到return的上一句，执行完finally后再执行return语句。<br>
+3.final是修饰符，被修饰的类不能被继承，被修饰的变量被赋值后不能改变，被修饰的方法不能被重写。<br>
+4.finally作为异常处理的一部分，只能用于try&hellip;catch语句块中，不管有没有发生异常，finally语句块都会执行。<br>
+5.finalize是Object类中的一个垃圾回收的方法。</p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://xhzhouup.github.io/tags/java/">java</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/01/1%E5%88%86%E9%92%9F%E8%AF%BB%E6%87%82jsp%E9%9A%8F%E7%AC%94/" data-tooltip="1分钟读懂jsp(随笔)">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2019/12/oop%E5%B0%8F%E7%BB%93/" data-tooltip="OOP小结">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://xhzhouup.github.io/2020/01/exception%E5%BC%82%E5%B8%B8%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://xhzhouup.github.io/2020/01/exception%E5%BC%82%E5%B8%B8%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://xhzhouup.github.io/2020/01/exception%E5%BC%82%E5%B8%B8%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 周周. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/01/1%E5%88%86%E9%92%9F%E8%AF%BB%E6%87%82jsp%E9%9A%8F%E7%AC%94/" data-tooltip="1分钟读懂jsp(随笔)">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2019/12/oop%E5%B0%8F%E7%BB%93/" data-tooltip="OOP小结">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://xhzhouup.github.io/2020/01/exception%E5%BC%82%E5%B8%B8%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://xhzhouup.github.io/2020/01/exception%E5%BC%82%E5%B8%B8%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://xhzhouup.github.io/2020/01/exception%E5%BC%82%E5%B8%B8%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F01%2Fexception%25E5%25BC%2582%25E5%25B8%25B8%25E5%25B0%258F%25E7%25BB%2593%2F">
+          <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F01%2Fexception%25E5%25BC%2582%25E5%25B8%25B8%25E5%25B0%258F%25E7%25BB%2593%2F">
+          <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F01%2Fexception%25E5%25BC%2582%25E5%25B8%25B8%25E5%25B0%258F%25E7%25BB%2593%2F">
+          <i class="fa fa-google-plus"></i><span>分享到 Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=110" alt="作者的图片" />
+    
+    <h4 id="about-card-name">周周</h4>
+    
+      <div id="about-card-bio">Day Day Up , 向前迈进。</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Java菜鸟攻城狮
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        成都，中国
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://xhzhouup.github.io/images/timg1.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://xhzhouup.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/xhzhouup.github.io\/2020\/01\/exception%E5%BC%82%E5%B8%B8%E5%B0%8F%E7%BB%93\/';
+          
+            this.page.identifier = '\/2020\/01\/exception%E5%BC%82%E5%B8%B8%E5%B0%8F%E7%BB%93\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

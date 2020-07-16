@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.67.0 with theme Tranquilpeak 0.4.7-BETA">
+<meta name="author" content="周周">
+<meta name="keywords" content="tech">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="OOP小结">
+<meta name="twitter:title" content="OOP小结">
+<meta property="og:url" content="https://xhzhouup.github.io/2019/12/oop%E5%B0%8F%E7%BB%93/">
+<meta property="twitter:url" content="https://xhzhouup.github.io/2019/12/oop%E5%B0%8F%E7%BB%93/">
+<meta property="og:site_name" content="周周的个人 Blog">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2019-12-15T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2019-12-15T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="java">
+    
+      <meta property="article:section" content="OOP">
+    
+  
+  
+    
+      <meta property="article:tag" content="OOP">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=640">
+
+
+    <title>OOP小结</title>
+
+    <link rel="icon" href="https://xhzhouup.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://xhzhouup.github.io/2019/12/oop%E5%B0%8F%E7%BB%93/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://xhzhouup.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://xhzhouup.github.io/">周周的个人 Blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://xhzhouup.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=90" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://xhzhouup.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=110" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">周周</h4>
+        
+          <h5 class="sidebar-profile-bio">Day Day Up , 向前迈进。</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://me.csdn.net/weixin_42508999" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-link"></i>
+      
+      <span class="sidebar-button-desc">CSDN</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/xhzhouup" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.weibo.com/zxh67" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-weibo"></i>
+      
+      <span class="sidebar-button-desc">Weibo</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      OOP小结
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2019-12-15T00:00:00Z">
+        
+  十二月 15, 2019
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://xhzhouup.github.io/categories/java">java</a>, 
+    
+      <a class="category-link" href="https://xhzhouup.github.io/categories/oop">OOP</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <h2 id="封装">封装</h2>
+<p>1.概念：指类将自身的属性私有化，对外部提供公共方法来进行访问。</p>
+<h4 id="好处">好处：</h4>
+<ul>
+<li>隐藏实现细节，提供公共的访问方式。</li>
+<li>提高代码复用性。</li>
+<li>提高安全性。</li>
+</ul>
+<pre><code>public class fengzhuang {
+    //私有化变量，对外提供get和set方法进行访问
+    private String name;
+    private int age;
+    public String getName() {
+        return name;
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+    public int getAge() {
+        return age;
+    }
+    public void setAge(int age) {
+        this.age = age;
+    }
+}
+</code></pre><h2 id="继承">继承</h2>
+<p>概念：当前类派生出新的类，当前的类被称为父类/基类/超类(Object)，派生出来的类被称为子类/派生类，子类可以继承父类所有的属性和方法，并且可以扩展自己的属性和方法。</p>
+<h4 id="好处-1">好处：</h4>
+<ul>
+<li>简化代码，提高代码的复用性。</li>
+<li>提高了可维护性。</li>
+</ul>
+<h4 id="缺点">缺点：</h4>
+<ul>
+<li>造成代码的耦合性过高。</li>
+</ul>
+<h2 id="修饰符访问范围作用域">修饰符访问范围（作用域）</h2>
+<table>
+<thead>
+<tr>
+<th>访问修饰符</th>
+<th>本类</th>
+<th>同包</th>
+<th>不同包子类</th>
+<th>不同包非子类</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>public</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+</tr>
+<tr>
+<td>protected</td>
+<td>√</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+</tr>
+<tr>
+<td>default</td>
+<td>√</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+</tr>
+<tr>
+<td>private</td>
+<td>√</td>
+<td>×</td>
+<td>×</td>
+<td>×</td>
+</tr>
+</tbody>
+</table>
+<h2 id="重载与重写">重载与重写</h2>
+<p>1.重写(override):发生在继承中，当父类的方法不满足子类的需求，子类对该方法进行重新定义。<br>
+2.规则：</p>
+<ul>
+<li>方法名，返回值，参数列表必须一致。</li>
+<li>子类的访问修饰符的作用域可以大于等于父类。</li>
+</ul>
+<p>3.重载(overload)：发生在一个类中，针对不同的情况写不同的方法。<br>
+4.规则：</p>
+<ul>
+<li>方法名一致。</li>
+<li>参数列表不同(个数，顺序，类型)。</li>
+<li>与修饰符、返回值无关。</li>
+</ul>
+<h2 id="super关键字">super关键字</h2>
+<p>1.super发生在继承中，作用是调用父类的属性或者方法。<br>
+2.创建子类对象时，默认会先调用父类无参的构造方法，可以使用super指定调用父类的构造方法。<br>
+3.super和this不能同时存在于同一个构造方法中，因为这两个关键字都要放在第一行。</p>
+<h2 id="子类的构建过程">子类的构建过程</h2>
+<p>先调用父类对应的构造器实例化一个父类对象,然后实例子类,最后把两个关联起来,表示他们是父子关系。</p>
+<h2 id="代码执行顺序">代码执行顺序</h2>
+<p>父类静态  子类静态  父类属性-父类构造器-子类属性-子类构造器</p>
+<p><strong>1、什么继承？继承有什么优点？</strong></p>
+<p>继承是一个类在原有的基础上派生出新的子类。<br>
+优点：简化代码，提高代码复用性和可维护性。</p>
+<p><strong>2、继承使用什么关键字？</strong></p>
+<p>extends</p>
+<p><strong>3、一个类可以同时继承多个类吗？所有类的父类是什么？</strong></p>
+<p>不能同时继承多个类，所有类的父类是Object。</p>
+<p><strong>4、什么是重写？用什么方法可以强制检测当前方法是否重写父类方法？</strong></p>
+<p>重写是指当父类的方法不满足子类的需求时，子类对该方法进行重新定义。<br>
+使用<code>@override</code>可以强制检测。</p>
+<p><strong>5、什么是多态？多态主要的应用是什么？</strong></p>
+<p>多态是指用一个行为具有多个不同表现形式或形态的能力。<br>
+主要应用：</p>
+<ul>
+<li>向上转型：父类引用指向子类对象。</li>
+<li>向下转型：把一个子类类型的对象从原来的父类类型转换为自己原来的子类类型。</li>
+</ul>
+<p><strong>6、什么是抽象方法？什么是抽象类？Java抽象类可以有构造函数吗？</strong></p>
+<p>抽象方法是指当不知道该方法具体的实现是，用abstract修饰，这个方法为抽象方法。<br>
+抽象类不一定有抽象方法，有抽象方法的类一定是抽象类。<br>
+抽象类有构造函数，但是不能实例化，只能由子类来继承。</p>
+<p><strong>7、Java抽象类可以有static方法吗？abstract方法可以用static修饰吗?</strong></p>
+<p>可以有static方法，但是abstract和static不能同时修饰一个方法。</p>
+<p><strong>8、这个静态方法可以被重写吗？Java抽象类中可以包含main方法吗？</strong></p>
+<p>不能被重写，可以被调用；可以包含main方法。</p>
+<p><strong>9、oop的三个特性?</strong></p>
+<p>封装、继承、多态。</p>
+<p><strong>10、super是什么?应用场景?</strong></p>
+<p>super发生在继承中，作用是调用父类的属性或者方法。</p>
+<p><strong>11、继承的特点?继承的限制?</strong></p>
+<p>java中只有单继承和多重继承，子类不能直接访问父类的私有成员，只有拥有。</p>
+<h2 id="final修饰符">final修饰符</h2>
+<pre><code>1.final修饰方法：该方法不能被重写。  
+2.final修饰变量：该变量初始化后不能修改数值；成员变量必须要有初始值，局部变量尽量在代码块结束前赋值。  
+3.final修饰类：该类不能有子类，不能被继承。  
+</code></pre>
+<h2 id="abstract">abstract</h2>
+<p>1.抽象方法：当不知道该方法的具体实现，这个方法可以用abstract修饰，这个方法为抽象方法，并且该方法不能有方法体({ });<br>
+2.抽象类：如果一个类中有抽象方法，那么该类是一个抽象类。</p>
+<ul>
+<li><strong>有抽象方法的类一定是抽象类，抽象类不一定有抽象方法。</strong></li>
+<li><strong>其子类必须实现抽象类中的抽象方法，如果其子类为抽象类则没必要。</strong></li>
+<li><strong>抽象方法的访问修饰符不能为private，也不能被final和static修饰。</strong></li>
+<li><strong>抽象类不能被实例化。</strong></li>
+</ul>
+<p>3.抽象类作用：将拥有共同属性特征的类继承此类，父类中添加新方法时子类将全部拥有而不用逐一去新增，提高了代码的复用性。</p>
+<h2 id="多态">多态</h2>
+<p>1.分类：</p>
+<ul>
+<li>静态多态(方法重载)：发生在一个类中，参数名相同，参数列表不同(个数，顺序，类型)，与返回值和修饰符无关。</li>
+<li>动态多态(方法重写)：发生在继承中，子类重写父类方法，返回值、方法名、参数列表必须一致，子类方法访问修饰符必须大于等于父类方法。</li>
+</ul>
+<p>2.向上转型：父类引用指向子类对象。(把一个子类类型的对象转换成父类类型)</p>
+<pre><code>SuperClass sup=new SubClass();
+</code></pre><p>3.向下转型：把一个子类类型的对象从原来的父类类型转换成自己原来的子类类型(一定向上转型过)。</p>
+<pre><code>SubClass sub=(SubClass) sup;
+</code></pre><h2 id="string类">String类</h2>
+<p>1.length():返回字符串长度。<br>
+2.equals(String str):比较两个字符串的内容是否相同。<br>
+3.indexOf(String str):返回字符串第一次出现的下标。<br>
+4.toCharArray():把字符串转化为字符数组。</p>
+<h2 id="方法的重载">方法的重载</h2>
+<p>1.方法名一致<br>
+2.参数列表不同(个数，类型，顺序)<br>
+3.与修饰符、返回值无关</p>
+<h2 id="值传递和引用传递">值传递和引用传递</h2>
+<p>1.值传递(pass by value)：指在调用函数的时候把实际参数复制一份传递到函数中，这样在函数中对参数进行修改影响不到实际参数。<br>
+2.引用传递(pass by reference)：指在调用函数的时候吧实际参数的地址直接传递给函数，这样在函数中对参数进行修改会影响到实际参数。</p>
+<h2 id="static">static</h2>
+<p>1.static用于修饰变量，方法和代码块。<br>
+2.静态变量(类变量)：指被static修饰的变量，能够被所有对象共享，当其中对象改变该变量值,其他对象也被改变,可以对象调用,也可以直接用类调用(可以不产生对象)。<br>
+3.实例变量：普通变量，对象独有变量,当它自身改变与其他对象无关,只能被对象调用。<br>
+4.静态方法(类方法)：可以直接被类调用(可以不产生对象)，该方法不能调用非静态属性，非静态方法和this。<br>
+5.静态代码块</p>
+<pre><code>    static{  
+        //代码块  
+    }
+</code></pre><p><strong>静态最优先执行，并且只会执行一次。</strong></p>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://xhzhouup.github.io/tags/oop/">OOP</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/01/exception%E5%BC%82%E5%B8%B8%E5%B0%8F%E7%BB%93/" data-tooltip="exception异常小结">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://xhzhouup.github.io/2019/12/oop%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://xhzhouup.github.io/2019/12/oop%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://xhzhouup.github.io/2019/12/oop%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 周周. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/01/exception%E5%BC%82%E5%B8%B8%E5%B0%8F%E7%BB%93/" data-tooltip="exception异常小结">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://xhzhouup.github.io/2019/12/oop%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://xhzhouup.github.io/2019/12/oop%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://xhzhouup.github.io/2019/12/oop%E5%B0%8F%E7%BB%93/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fxhzhouup.github.io%2F2019%2F12%2Foop%25E5%25B0%258F%25E7%25BB%2593%2F">
+          <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fxhzhouup.github.io%2F2019%2F12%2Foop%25E5%25B0%258F%25E7%25BB%2593%2F">
+          <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fxhzhouup.github.io%2F2019%2F12%2Foop%25E5%25B0%258F%25E7%25BB%2593%2F">
+          <i class="fa fa-google-plus"></i><span>分享到 Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=110" alt="作者的图片" />
+    
+    <h4 id="about-card-name">周周</h4>
+    
+      <div id="about-card-bio">Day Day Up , 向前迈进。</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Java菜鸟攻城狮
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        成都，中国
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://xhzhouup.github.io/images/timg1.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://xhzhouup.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/xhzhouup.github.io\/2019\/12\/oop%E5%B0%8F%E7%BB%93\/';
+          
+            this.page.identifier = '\/2019\/12\/oop%E5%B0%8F%E7%BB%93\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+

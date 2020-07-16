@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>thread on 周周的个人 Blog</title>
+    <link>https://xhzhouup.github.io/categories/thread/</link>
+    <description>Recent content in thread on 周周的个人 Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 11 Apr 2020 00:00:00 +0000</lastBuildDate>
+    
+	<atom:link href="https://xhzhouup.github.io/categories/thread/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>thread线程小结</title>
+      <link>https://xhzhouup.github.io/2020/04/thread%E7%BA%BF%E7%A8%8B%E5%B0%8F%E7%BB%93/</link>
+      <pubDate>Sat, 11 Apr 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://xhzhouup.github.io/2020/04/thread%E7%BA%BF%E7%A8%8B%E5%B0%8F%E7%BB%93/</guid>
+      <description></description>
+    </item>
+    
+  </channel>
+</rss>
