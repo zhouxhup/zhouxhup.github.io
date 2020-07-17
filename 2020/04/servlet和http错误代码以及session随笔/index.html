@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.67.0 with theme Tranquilpeak 0.4.7-BETA">
+<meta name="author" content="周周">
+<meta name="keywords" content="tech">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="servlet和http错误代码以及session随笔">
+<meta name="twitter:title" content="servlet和http错误代码以及session随笔">
+<meta property="og:url" content="https://xhzhouup.github.io/2020/04/servlet%E5%92%8Chttp%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%E4%BB%A5%E5%8F%8Asession%E9%9A%8F%E7%AC%94/">
+<meta property="twitter:url" content="https://xhzhouup.github.io/2020/04/servlet%E5%92%8Chttp%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%E4%BB%A5%E5%8F%8Asession%E9%9A%8F%E7%AC%94/">
+<meta property="og:site_name" content="周周的个人 Blog">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2020-04-13T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2020-04-13T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="java">
+    
+      <meta property="article:section" content="servlet">
+    
+      <meta property="article:section" content="http">
+    
+      <meta property="article:section" content="session">
+    
+  
+  
+    
+      <meta property="article:tag" content="java">
+    
+      <meta property="article:tag" content="http">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=640">
+
+
+    <title>servlet和http错误代码以及session随笔</title>
+
+    <link rel="icon" href="https://xhzhouup.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://xhzhouup.github.io/2020/04/servlet%E5%92%8Chttp%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%E4%BB%A5%E5%8F%8Asession%E9%9A%8F%E7%AC%94/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://xhzhouup.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://xhzhouup.github.io/">周周的个人 Blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://xhzhouup.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=90" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://xhzhouup.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=110" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">周周</h4>
+        
+          <h5 class="sidebar-profile-bio">Day Day Up , 向前迈进。</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://me.csdn.net/weixin_42508999" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-link"></i>
+      
+      <span class="sidebar-button-desc">CSDN</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/xhzhouup" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://www.weibo.com/zxh67" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-weibo"></i>
+      
+      <span class="sidebar-button-desc">Weibo</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      servlet和http错误代码以及session随笔
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-04-13T00:00:00Z">
+        
+  四月 13, 2020
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://xhzhouup.github.io/categories/java">java</a>, 
+    
+      <a class="category-link" href="https://xhzhouup.github.io/categories/servlet">servlet</a>, 
+    
+      <a class="category-link" href="https://xhzhouup.github.io/categories/http">http</a>, 
+    
+      <a class="category-link" href="https://xhzhouup.github.io/categories/session">session</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <h3 id="post和get的区别-">post和GET的区别?</h3>
+<ul>
+<li>
+<p>1.安全性:
+GET方式：安全性差。因为是直接将数据显示在地址栏中，浏览器有缓冲，可记录用户信息。所以安全性低。
+POST方式：安全性高。因为post方式提交数据时是采用的HTTP post机制，是将表单中的字段与值放置在 HTTP HEADER内一起传送到ACTION所指的URL中，用户是看不见的。</p>
+</li>
+<li>
+<p>2.数据量:
+GET方式：数据量长度有限制，一般不超过2kb。因为是参数传递，且在地址栏中，故数据量有限制。
+POST方式：适合大规模的数据传送。因为是以实体的方式传送的。</p>
+</li>
+<li>
+<p>3.效率:
+doGet：路径传参。效率高，
+doPOST：实体传参。效率低，
+当实现查询功能时适合用get。get效率比post高些。</p>
+</li>
+<li>
+<p>4.适用场景:
+当form框里面的method为get时，执行doGet方法
+当form框里面的method为post时，执行doPost方法</p>
+</li>
+<li>
+<p>url:直接填地址请求  get请求</p>
+</li>
+<li>
+<p>a标签的请求: get请求</p>
+</li>
+<li>
+<p>form :method=get</p>
+</li>
+<li>
+<p>form ;method=&quot;post&rdquo;  ajax的post请求</p>
+</li>
+</ul>
+<h3 id="重定向和转发的区别-">重定向和转发的区别</h3>
+<ul>
+<li>1.请求次数
+直接转发方式（Forward），客户端和浏览器只发出一次请求，Servlet、HTML、JSP或其它信息资源，由第二个   信息资源响应该请求，在请求对象request中，保存的对象对于每个信息资源是共享的。</li>
+</ul>
+<p>　　重定向方式（Redirect）实际是两次HTTP请求，服务器端在响应第一次请求的时候，让浏览器再向另外一个    URL发出请求，从而达到转发的目的。</p>
+<ul>
+<li>
+<p>2.地址栏
+转发：地址栏不发生变化，显示的是上一个页面的地址 ；</p>
+<p>重定向：显示新的地址 ；</p>
+</li>
+<li>
+<p>3.效率(服务器压力)
+forward：高
+redirect：低</p>
+</li>
+<li>
+<p>4.参数
+转发：请求域中数据不会丢失
+重定向：显示新的地址
+请求域中的数据会丢失，因为是2次请求</p>
+</li>
+<li>
+<p>5.调用的对象 request  response</p>
+</li>
+<li>
+<p>5.适用场景
+如果要保留请求域中的数据，使用转发，否则使用重定向。</p>
+<p>以后访问数据库，增删改使用重定向，查询使用转发。</p>
+<p>重定向可以访问项目以外的url,转发只能访问当前的项目</p>
+</li>
+</ul>
+<h3 id="http协议错误代码大全">HTTP协议错误代码大全</h3>
+<ul>
+<li>
+<h4 id="http">HTTP</h4>
+</li>
+</ul>
+<h6 id="1xx临时响应表示临时响应并需要请求者继续执行操作的状态代码">1xx（临时响应）：表示临时响应并需要请求者继续执行操作的状态代码。</h6>
+<p>100  （继续） 请求者应当继续提出请求。服务器返回此代码表示已收到请求的第一部分，正在等待其余部分。</p>
+<p>101  （切换协议） 请求者已要求服务器切换协议，服务器已确认并准备切换。</p>
+<h6 id="2xx-成功表示成功处理了请求的状态代码">2xx （成功）：表示成功处理了请求的状态代码。</h6>
+<h5 id="注200代表请求成但是这并不意味着返回的数据也是正确的">注：200代表请求成，但是这并不意味着，返回的数据也是正确的</h5>
+<p>200  （成功）  服务器已成功处理了请求。</p>
+<p>201  （已创建）  请求成功并且服务器创建了新的资源。</p>
+<p>202  （已接受）  服务器已接受请求，但尚未处理。</p>
+<p>203  （非授权信息）  服务器已成功处理了请求，但返回的信息可能来自另一来源。</p>
+<p>204  （无内容）  服务器成功处理了请求，但没有返回任何内容。</p>
+<p>205  （重置内容） 服务器成功处理了请求，但没有返回任何内容。</p>
+<p>206  （部分内容）  服务器成功处理了部分 GET 请求。</p>
+<h6 id="3xx-重定向接口重定向">3xx （重定向）：接口重定向</h6>
+<p>300  （多种选择）  针对请求，服务器可执行多种操作。服务器可根据请求者 (user agent) 选择一项操作，或提供操作列表供请求者选择。</p>
+<p>301  （永久移动）  请求的网页已永久移动到新位置。服务器返回此响应（对 GET 或 HEAD 请求的响应）时，会自动将请求者转到新位置。</p>
+<p>302  （临时移动）  意味着接口将重定向到另一个URL中去</p>
+<p>303  （查看其他位置） 请求者应当对不同的位置使用单独的 GET 请求来检索响应时，服务器返回此代码。</p>
+<p>304  （未修改） 自从上次请求后，请求的网页未修改过。服务器返回此响应时，不会返回网页内容。</p>
+<p>305  （使用代理） 请求者只能使用代理访问请求的网页。如果服务器返回此响应，还表示请求者应使用代理。</p>
+<p>307  （临时重定向）  服务器目前从不同位置的网页响应请求，但请求者应继续使用原有位置来进行以后的请求。</p>
+<h6 id="4xx请求错误这些状态代码表示请求可能出错妨碍了服务器的处理">4xx（请求错误）：这些状态代码表示请求可能出错，妨碍了服务器的处理。</h6>
+<p>400  （错误请求）Bad Request请求包含语法错误</p>
+<p>原因：（1）输入的参数多了或者少了（2）输入的参数错误（3）有时候服务器请求超时也会造成400错误</p>
+<p>401  （未授权）401 Unauthorized当前请求需要用户验证</p>
+<p>403  （禁止）    Forbidden服务器已理解请求，但拒绝执行它</p>
+<h5 id="原因出现这类情况一般是访问这个接口需要一定的权限但是访问者没有相应的访问权限">原因：出现这类情况一般是访问这个接口需要一定的权限，但是访问者没有相应的访问权限</h5>
+<h5 id="解决方法">解决方法：</h5>
+<ul>
+<li>
+<h6 id="a是否是登录的用户没有访问的权限">a.是否是登录的用户没有访问的权限；</h6>
+</li>
+<li>
+<h6 id="b在服务端这个接口没有配置访问权限即禁止任何用户访问">b.在服务端这个接口没有配置访问权限，即禁止任何用户访问</h6>
+</li>
+</ul>
+<p>404  （未找到） 服务器找不到请求的网页。</p>
+<p>解决：仔细检查接口的RUL是否有误</p>
+<p>405  （方法禁用）请求行中指定的方法不能用于请求相应的资源。</p>
+<p>406  （不接受） 无法使用请求的内容特性响应请求的网页。</p>
+<p>407  （需要代理授权） 此状态代码与 401（未授权）类似，但指定请求者应当授权使用代理。</p>
+<p>408  （请求超时）  服务器等候请求时发生超时。</p>
+<p>409  （冲突）  服务器在完成请求时发生冲突。服务器必须在响应中包含有关冲突的信息。</p>
+<p>410  （已删除）  如果请求的资源已永久删除，服务器就会返回此响应。</p>
+<p>411  （需要有效长度） 服务器不接受不含有效内容长度标头字段的请求。</p>
+<p>412  （未满足前提条件） 服务器未满足请求者在请求中设置的其中一个前提条件。</p>
+<p>413  （请求实体过大） 服务器无法处理请求，因为请求实体过大，超出服务器的处理能力。</p>
+<p>414  （请求的 URI 过长） 请求的 URI（通常为网址）过长，服务器无法处理。</p>
+<p>415  （不支持的媒体类型） Unsupported Media Type对于当前请求的方法和所请求的资源，请求中提交的实体并不是服务器中所支持的格式，因此请求被拒绝</p>
+<h5 id="解决方法-1">解决方法：</h5>
+<ul>
+<li>
+<h6 id="a查看是否加了请求头部一般来说必须要加的header是content-typeapplicationjsoncharsetutf-8">a.查看是否加了请求头部，一般来说必须要加的header是Content-Type：application/json;charset=utf-8；</h6>
+</li>
+<li>
+<h6 id="b在上传文件的时候要特别注意请求的头部------content-type不是applicationjson格式是multipartform-data格式">b.在上传文件的时候要特别注意，请求的头部      Content-Type不是application/json格式，是multipart/form-data格式。</h6>
+</li>
+</ul>
+<p>416  （请求范围不符合要求） 如果页面无法提供请求的范围，则服务器会返回此状态代码。</p>
+<p>417  （未满足期望值） 服务器未满足&quot;期望&quot;请求标头字段的要求。</p>
+<h6 id="5xx服务器错误">5xx（服务器错误）</h6>
+<p>这些状态代码表示服务器在尝试处理请求时发生内部错误。这些错误可能是服务器本身的错误，而不是请求出错。</p>
+<p>代码  说明</p>
+<p>500  （服务器内部错误）  服务器遇到错误，无法完成请求。</p>
+<p>501  （尚未实施） 服务器不具备完成请求的功能。例如，服务器无法识别请求方法时可能会返回此代码。</p>
+<p>502  （错误网关） 服务器作为网关或代理，从上游服务器收到无效响应。</p>
+<p>Bad Gateway作为网关或者代理工作的服务器尝试执行请求时，从上游服务器接收到无效的响应</p>
+<ul>
+<li>
+<h5 id="解决方法检查服务器">解决方法：检查服务器</h5>
+</li>
+</ul>
+<p>503  （服务不可用） Service Unavailable由于临时的服务器维护或者过载，服务器当前无法处理请求。</p>
+<p>504  Gateway Timeout作为网关或者代理工作的服务器尝试执行请求时，未能及时从上游服务器（URI标识出的服务器，例如HTTP、FTP、LDAP）或者辅助服务器（例如DNS）收到响应。</p>
+<p>505  （HTTP 版本不受支持） 服务器不支持请求中所用的 HTTP 协议版本</p>
+<h3 id="session会话">session会话</h3>
+<h5 id="跟踪技术">跟踪技术</h5>
+<pre><code>当前浏览器第一次访问服务器,服务器会创建一个session会话对象(默认30分钟失效),
+并产生一个sessionID,响应的时候把这个sessionID响应给浏览器,浏览器就把这个
+sessionID放入cookie中进行保存,下一次请求的时候携带cookie里sessionID一起做
+请求,这个时候服务器,接收客户端的请求,查看里面是否有携带sessionID,
+如果没有认为第一请求,或者携带有sessionID,但在服务器端匹配不上,
+那么也认为是第一次请求
+</code></pre>
+<h4 id="session的生命周期">Session的生命周期</h4>
+<p>Session什么时候创建？</p>
+<pre><code>Session存储在服务器端，一般存放在服务器的内存中（为了高速存取），
+Sessinon在用户访问第一次访问服务器时创建，需要注意只有访问JSP、Servlet等程序时才会创建Session，
+只访问HTML、IMAGE等静态资源并不会创建Session，可调用request.getSession(true)强制生成Session。
+session其实就是一个Map，键=值对，通过session.getAttribute(&quot;name&quot;);获得session中设置的参数。
+</code></pre>
+<p>Session什么时候失效？</p>
+<ol>
+<li>
+<p>服务器会把长时间没有活动的Session从服务器内存中清除，此时Session便失效。Tomcat中Session的默认失效时间为30分钟。</p>
+</li>
+<li>
+<p>调用Session的invalidate方法。</p>
+</li>
+</ol>
+<ul>
+<li>
+<p>session失效的设置
+1.web.xml中（单位是分钟）</p>
+<pre><code>  &lt;session-config&gt;
+          &lt;session-timeout&gt;30&lt;session-timeout&gt;
+  &lt;/session-config&gt;
+</code></pre>
+</li>
+</ul>
+<p>　　2. 在程序中手动设置</p>
+<pre><code>session.setMaxInactiveInterval(30 * 60);//设置单位为秒，设置为-1永不过期
+</code></pre>
+<p>　　3. tomcat也可以修改session过期时间，在server.xml中定义context时采用如下定义</p>
+<pre><code>&lt;Context path=&quot;/livsorder&quot; docBase=&quot;/home/httpd/html/livsorder&quot;
+ 　　defaultSessionTimeOut=&quot;3600&quot;   isWARExpanded=&quot;true&quot; 
+ 　　isWARValidated=&quot;false&quot; isInvokerEnabled=&quot;true&quot; isWorkDirPersistent=&quot;false&quot;/&gt;
+</code></pre>
+<p>　　
+4. 销毁session中所有数据
+session.invalidate();</p>
+<p><strong>写在最后</strong>：</p>
+<pre><code>本博客只是当初学习了解时的一篇随文笔记。内容比较散乱，有些知识点内容不够全面，同时有些知识点别的大神写的非常详细和易懂，就顺手搬运了点内容，如有相关内容侵权，望海涵，请及时联系作者！
+编程之路才刚开始！DayDayUp！！！
+</code></pre>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://xhzhouup.github.io/tags/java/">java</a>
+
+  <a class="tag tag--primary tag--small" href="https://xhzhouup.github.io/tags/http/">http</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/04/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" data-tooltip="网络编程">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/04/thread%E7%BA%BF%E7%A8%8B%E5%B0%8F%E7%BB%93/" data-tooltip="thread线程小结">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://xhzhouup.github.io/2020/04/servlet%E5%92%8Chttp%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%E4%BB%A5%E5%8F%8Asession%E9%9A%8F%E7%AC%94/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://xhzhouup.github.io/2020/04/servlet%E5%92%8Chttp%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%E4%BB%A5%E5%8F%8Asession%E9%9A%8F%E7%AC%94/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://xhzhouup.github.io/2020/04/servlet%E5%92%8Chttp%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%E4%BB%A5%E5%8F%8Asession%E9%9A%8F%E7%AC%94/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 周周. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/04/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" data-tooltip="网络编程">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/04/thread%E7%BA%BF%E7%A8%8B%E5%B0%8F%E7%BB%93/" data-tooltip="thread线程小结">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://xhzhouup.github.io/2020/04/servlet%E5%92%8Chttp%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%E4%BB%A5%E5%8F%8Asession%E9%9A%8F%E7%AC%94/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/intent/tweet?text=https://xhzhouup.github.io/2020/04/servlet%E5%92%8Chttp%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%E4%BB%A5%E5%8F%8Asession%E9%9A%8F%E7%AC%94/">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://xhzhouup.github.io/2020/04/servlet%E5%92%8Chttp%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%E4%BB%A5%E5%8F%8Asession%E9%9A%8F%E7%AC%94/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F04%2Fservlet%25E5%2592%258Chttp%25E9%2594%2599%25E8%25AF%25AF%25E4%25BB%25A3%25E7%25A0%2581%25E4%25BB%25A5%25E5%258F%258Asession%25E9%259A%258F%25E7%25AC%2594%2F">
+          <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/intent/tweet?text=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F04%2Fservlet%25E5%2592%258Chttp%25E9%2594%2599%25E8%25AF%25AF%25E4%25BB%25A3%25E7%25A0%2581%25E4%25BB%25A5%25E5%258F%258Asession%25E9%259A%258F%25E7%25AC%2594%2F">
+          <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F04%2Fservlet%25E5%2592%258Chttp%25E9%2594%2599%25E8%25AF%25AF%25E4%25BB%25A3%25E7%25A0%2581%25E4%25BB%25A5%25E5%258F%258Asession%25E9%259A%258F%25E7%25AC%2594%2F">
+          <i class="fa fa-google-plus"></i><span>分享到 Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=110" alt="作者的图片" />
+    
+    <h4 id="about-card-name">周周</h4>
+    
+      <div id="about-card-bio">Day Day Up , 向前迈进。</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Java菜鸟攻城狮
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        成都，中国
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://xhzhouup.github.io/images/timg1.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://xhzhouup.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/xhzhouup.github.io\/2020\/04\/servlet%E5%92%8Chttp%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%E4%BB%A5%E5%8F%8Asession%E9%9A%8F%E7%AC%94\/';
+          
+            this.page.identifier = '\/2020\/04\/servlet%E5%92%8Chttp%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%E4%BB%A5%E5%8F%8Asession%E9%9A%8F%E7%AC%94\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+
