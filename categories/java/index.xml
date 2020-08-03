@@ -1,15 +1,42 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>java on 周周的个人 Blog</title>
+    <title>java on zhouxh&#39;s Blog</title>
     <link>https://xhzhouup.github.io/categories/java/</link>
-    <description>Recent content in java on 周周的个人 Blog</description>
+    <description>Recent content in java on zhouxh&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://xhzhouup.github.io/categories/java/index.xml" rel="self" type="application/rss+xml" />
     
+    
+    <item>
+      <title>c3p0、dbcp、druid三大连接池的区别</title>
+      <link>https://xhzhouup.github.io/2020/08/c3p0dbcpdruid%E4%B8%89%E5%A4%A7%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E5%8C%BA%E5%88%AB/</link>
+      <pubDate>Sat, 01 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://xhzhouup.github.io/2020/08/c3p0dbcpdruid%E4%B8%89%E5%A4%A7%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E5%8C%BA%E5%88%AB/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>thread线程小结</title>
+      <link>https://xhzhouup.github.io/2020/07/thread%E7%BA%BF%E7%A8%8B%E5%B0%8F%E7%BB%93/</link>
+      <pubDate>Mon, 13 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://xhzhouup.github.io/2020/07/thread%E7%BA%BF%E7%A8%8B%E5%B0%8F%E7%BB%93/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>网络编程</title>
+      <link>https://xhzhouup.github.io/2020/06/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</link>
+      <pubDate>Sat, 20 Jun 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://xhzhouup.github.io/2020/06/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</guid>
+      <description></description>
+    </item>
     
     <item>
       <title>java基础简单小结</title>
@@ -30,29 +57,11 @@
     </item>
     
     <item>
-      <title>网络编程</title>
-      <link>https://xhzhouup.github.io/2020/04/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</link>
-      <pubDate>Mon, 20 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://xhzhouup.github.io/2020/04/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/</guid>
-      <description></description>
-    </item>
-    
-    <item>
       <title>servlet和http错误代码以及session随笔</title>
       <link>https://xhzhouup.github.io/2020/04/servlet%E5%92%8Chttp%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%E4%BB%A5%E5%8F%8Asession%E9%9A%8F%E7%AC%94/</link>
       <pubDate>Mon, 13 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>https://xhzhouup.github.io/2020/04/servlet%E5%92%8Chttp%E9%94%99%E8%AF%AF%E4%BB%A3%E7%A0%81%E4%BB%A5%E5%8F%8Asession%E9%9A%8F%E7%AC%94/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>thread线程小结</title>
-      <link>https://xhzhouup.github.io/2020/04/thread%E7%BA%BF%E7%A8%8B%E5%B0%8F%E7%BB%93/</link>
-      <pubDate>Sat, 11 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://xhzhouup.github.io/2020/04/thread%E7%BA%BF%E7%A8%8B%E5%B0%8F%E7%BB%93/</guid>
       <description></description>
     </item>
     

@@ -1,22 +1,40 @@
 <?xml version="1.0" encoding="utf-8" standalone="yes"?>
 <rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
   <channel>
-    <title>Categories on 周周的个人 Blog</title>
+    <title>Categories on zhouxh&#39;s Blog</title>
     <link>https://xhzhouup.github.io/categories/</link>
-    <description>Recent content in Categories on 周周的个人 Blog</description>
+    <description>Recent content in Categories on zhouxh&#39;s Blog</description>
     <generator>Hugo -- gohugo.io</generator>
     <language>en-us</language>
-    <lastBuildDate>Mon, 25 May 2020 00:00:00 +0000</lastBuildDate>
+    <lastBuildDate>Sat, 01 Aug 2020 00:00:00 +0000</lastBuildDate>
     
 	<atom:link href="https://xhzhouup.github.io/categories/index.xml" rel="self" type="application/rss+xml" />
     
     
     <item>
+      <title>database</title>
+      <link>https://xhzhouup.github.io/categories/database/</link>
+      <pubDate>Sat, 01 Aug 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://xhzhouup.github.io/categories/database/</guid>
+      <description></description>
+    </item>
+    
+    <item>
       <title>java</title>
       <link>https://xhzhouup.github.io/categories/java/</link>
-      <pubDate>Mon, 25 May 2020 00:00:00 +0000</pubDate>
+      <pubDate>Sat, 01 Aug 2020 00:00:00 +0000</pubDate>
       
       <guid>https://xhzhouup.github.io/categories/java/</guid>
+      <description></description>
+    </item>
+    
+    <item>
+      <title>thread</title>
+      <link>https://xhzhouup.github.io/categories/thread/</link>
+      <pubDate>Mon, 13 Jul 2020 00:00:00 +0000</pubDate>
+      
+      <guid>https://xhzhouup.github.io/categories/thread/</guid>
       <description></description>
     </item>
     
@@ -44,24 +62,6 @@
       <pubDate>Mon, 13 Apr 2020 00:00:00 +0000</pubDate>
       
       <guid>https://xhzhouup.github.io/categories/session/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>thread</title>
-      <link>https://xhzhouup.github.io/categories/thread/</link>
-      <pubDate>Sat, 11 Apr 2020 00:00:00 +0000</pubDate>
-      
-      <guid>https://xhzhouup.github.io/categories/thread/</guid>
-      <description></description>
-    </item>
-    
-    <item>
-      <title>database</title>
-      <link>https://xhzhouup.github.io/categories/database/</link>
-      <pubDate>Wed, 25 Mar 2020 00:20:24 +0800</pubDate>
-      
-      <guid>https://xhzhouup.github.io/categories/database/</guid>
       <description></description>
     </item>
     

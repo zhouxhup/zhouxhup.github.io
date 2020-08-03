@@ -13,32 +13,32 @@
 
 <meta property="og:description" content="">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Mysql知识01">
-<meta name="twitter:title" content="Mysql知识01">
-<meta property="og:url" content="https://xhzhouup.github.io/2020/01/mysql%E7%9F%A5%E8%AF%8601/">
-<meta property="twitter:url" content="https://xhzhouup.github.io/2020/01/mysql%E7%9F%A5%E8%AF%8601/">
+<meta property="og:title" content="网络编程">
+<meta name="twitter:title" content="网络编程">
+<meta property="og:url" content="https://xhzhouup.github.io/2020/06/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">
+<meta property="twitter:url" content="https://xhzhouup.github.io/2020/06/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">
 <meta property="og:site_name" content="zhouxh&#39;s Blog">
 <meta property="og:description" content="">
 <meta name="twitter:description" content="">
 <meta property="og:locale" content="zh-cn">
 
   
-    <meta property="article:published_time" content="2020-01-23T15:57:22">
+    <meta property="article:published_time" content="2020-06-20T00:00:00">
   
   
-    <meta property="article:modified_time" content="2020-01-23T15:57:22">
+    <meta property="article:modified_time" content="2020-06-20T00:00:00">
   
   
   
     
-      <meta property="article:section" content="database">
-    
-      <meta property="article:section" content="Mysql">
+      <meta property="article:section" content="java">
     
   
   
     
-      <meta property="article:tag" content="Mysql">
+      <meta property="article:tag" content="java">
+    
+      <meta property="article:tag" content="TCP/UDP">
     
   
 
@@ -59,14 +59,14 @@
   <meta property="twitter:image" content="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=640">
 
 
-    <title>Mysql知识01</title>
+    <title>网络编程</title>
 
     <link rel="icon" href="https://xhzhouup.github.io/favicon.png">
     
 
     
 
-    <link rel="canonical" href="https://xhzhouup.github.io/2020/01/mysql%E7%9F%A5%E8%AF%8601/">
+    <link rel="canonical" href="https://xhzhouup.github.io/2020/06/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">
 
     
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
@@ -226,15 +226,15 @@
             <div class="post-header main-content-wrap text-left">
   
     <h1 class="post-title" itemprop="headline">
-      Mysql知识01
+      网络编程
     </h1>
   
   
   <div class="postShorten-meta post-meta">
     
-      <time itemprop="datePublished" datetime="2020-01-23T15:57:22&#43;08:00">
+      <time itemprop="datePublished" datetime="2020-06-20T00:00:00Z">
         
-  一月 23, 2020
+  六月 20, 2020
 
       </time>
     
@@ -243,9 +243,7 @@
   
     <span>发布在</span>
     
-      <a class="category-link" href="https://xhzhouup.github.io/categories/database">database</a>, 
-    
-      <a class="category-link" href="https://xhzhouup.github.io/categories/mysql">Mysql</a>
+      <a class="category-link" href="https://xhzhouup.github.io/categories/java">java</a>
     
   
 
@@ -255,106 +253,37 @@
           
           <div class="post-content markdown" itemprop="articleBody">
             <div class="main-content-wrap">
-              <h4 id="一什么是mysql">一、什么是MySQL？</h4>
-<pre><code>    MySQL是一种开放源代码的关系型数据库管理系统（RDBMS），使用最常用的数据库管理语言--结构化查询语言（SQL）进行数据库管理。	
-</code></pre>
-<h5 id="二什么是数据库">二、什么是数据库？</h5>
-<p>    首先了解数据库，就要先知道什么是数据库管理系统？什么又是关系型数据库管理系统？</p>
-<pre><code>数据库管理系统（DataBase Management System，DBMS）：指一种操作和管理数据库的大型软件，用于建立、使用和维护数据库，对数据库进行统一管理和控制，以保证数据库的安全性和完整性。用户通过数据库管理系统访问数据库中的数据。
-
-关系数据库管理系统（Relational Database Management System：RDBMS）：是指包括相互联系的逻辑组织和存取这些数据的一套程序 (数据库管理系统软件)。关系数据库管理系统就是管理关系数据库，并将数据逻辑组织的系统。
-</code></pre>
-<p>    而数据库（DATA BASE）是指长期保存在计算机的存储设备上，按照一定规则组织起来，可以被各种用户或应用共享的数据集合。</p>
-<pre><code>    通常所说就是用来组织、储存和管理数据的一个仓库。
-</code></pre>
-<h4 id="三为什么选择mysql">三、为什么选择MySQL？</h4>
-<pre><code>1、软件本身体积小，不占用太多内存空间，安装简单并且易于维护。
-2、MySQL是开放源代码的并且没有版权约束，自主性好。
-3、运行速度和命令执行的速度快。
-4、跨平台性强，运行在多种系统平台上，如windouws，Linux，Unix等。
-</code></pre>
-<h4 id="四初识mysql命令">四、初识MySQL命令</h4>
-<h5 id="1mysql的服务启动与停止">1、MySQL的服务启动与停止</h5>
-<p>开启服务：net  start mysql</p>
-<pre><code>当我们把MySQL数据库安装好了之后，我们就可以点击Win+R键输入cmd打开命令提示符面板，输入net start  +服务名[mysql的具体安装版本]，例如我安装的是mysql5.7,则启动服务输入net start mysql57，同理关闭服务，只需将start改为stop就可以了。
-</code></pre>
-<p>关闭服务：net  stop mysql</p>
-<pre><code>同时，还可以在计算机-&gt;管理-&gt;服务。里面去找Mysql的服务进行启动和关闭。
-</code></pre>
-<h5 id="2进入mysql">2、进入MySQL</h5>
-<p>登录方式</p>
-<pre><code>    1.可以直接点击Windows系统的左下角开始，找到MySQL  [版本号] Command Line Client  界面，直接输入密码登录
-
-    2.在cmd命令提示符里面输入命令进行登录【安装过程中，默认用户为root，超级管理员】
-        mysql	-h地址 -u用户 -p密码
-</code></pre>
-<h5 id="3sql语句">3、SQL语句</h5>
-<pre><code>SQL是结构化查询语言（Structured Query Language）。
-SQL语句包含数据定义语言（DDL）、数据查询语言（DQL）、数据操作语言（DML）、数据控制语言（DCL）四种。
-</code></pre>
-<h5 id="4数据类型及约束">4、数据类型及约束</h5>
-<h6 id="nbspnbsp-nbspnbsp-1数字类型">      1.数字类型</h6>
-<pre><code>整型：
-tinyint	          1个字节      范围(-128~127)
-smallint	      2个字节      范围(-32768~32767)
-mediumint	      3个字节      范围(-8388608~8388607)
-int	              4个字节 	  范围(-2147483648~2147483647)
-bigint	          8个字节 	  范围(+-9.22*10的18次方)
-
-浮点型：
-float		单精度浮点型    4字节 	7位小数
-double		双精度浮点型    8字节	15位小数
-
-定点型：
-decimal(总位数，小数点后的位数)			decimal(M,D)  		17字节			30位小数
-【注：M必须大于D，因为M为总位数，D为小数位】
-</code></pre>
-<h6 id="nbspnbsp-nbspnbsp-2字符串类型">      2.字符串类型</h6>
-<pre><code>char（长度）   			  		 -固定长度字符串						范围（0-255）
-varchar（最大的长度）			-可变长度字符串						范围（0-65535）
-</code></pre>
-<h6 id="nbspnbsp-nbspnbsp-3时间类型">      3.时间类型</h6>
-<pre><code>date					年月日	 				yyyy-MM-dd				3字节
-datetime			年月日 时分秒			yyyy-MM-dd  HH:mm：ss		8字节
-</code></pre>
-<h6 id="nbspnbsp-nbspnbsp-4约束">      4.约束</h6>
-<pre><code>1.主键约束（Primay Key）：    主键，具有唯一标识和唯一性，同时不能为空，也不能重复；
-                【Mysql可以使用auto_increment来实现列的自动增长】
-2.唯一约束 （Unique ）：		 唯一性，可以空，但只能有一个；
-3.默认约束 (Default ) ：		 该数据的默认值；
-4.非空约束（Not Null ）:		 设置非空约束，该字段不能为空。
-4.外键约束 (Foreign Key ）：  需要建立两表间的关系；
-        FOREIGN KEY(当前字段)  REFERENCES 外键表 (外键表字段)
-</code></pre>
-<h5 id="5数据库的管理">5、数据库的管理</h5>
-<pre><code>创建数据库		 create database [if not exists]  数据库名 ；
-使用数据库		use 数据库；
-删除数据库		drop database 数据库；
-查看数据库		show databases；
-查看数据库的创建信息			show create database 数据库名;   
-退出			exit
-</code></pre>
-<h5 id="6数据库表的管理">6、数据库表的管理</h5>
-<pre><code>创建表			        create table  表名 （列名   列的数据类型    [列的约束]，……）;
-查看表的创建信息			show  create table 表名;	
-显示所有表				show  tables;
-删除表 			        drop table 表名；		【注：有外键关系时要先删除外键表再进行删除本表】
-复制表			        create table  表名  select * from 表名;
-修改表
-            添加列			alter table 表名 add 列名 列的数据类型  列的约束
-            修改列			alter table 表名 change 久列名 新列名 新列的数据类型  新列的约束
-            删除列 	    	alter table 表名 drop column 列名
-			
-添加数据(insert)
-    insert into 表名 (列名1，列名2，……) values (值1，值2，……)；
-        【注：列名可以不写，默认为全部所有列。值必须和列名保持一致，并且值的类型也必须是列的数据类型】
-修改数据（update）
-    update 表名 set 列1=新值1，列2=新值2，…… [ where 条件]；
-删除数据（delete）
-    delete from 表名 [where 条件]；		//数据还可以恢复
-    truncate table 表名；            //删除所有的数据，且数据不能恢复。同时truncate不能用于有外键约束引用的表。它可以重置自增列。
-</code></pre>
-<h6 id="此篇博客介绍了mysql的一些基础知识和管理数据库表的相关语法后面的数据库相关操作语句的博客正在更新">此篇博客，介绍了Mysql的一些基础知识和管理数据库、表的相关语法。后面的数据库相关操作语句的博客正在更新……</h6>
+              <h3 id="tcp-和-udp的区别-">TCP 和 UDP的区别</h3>
+<p>1.TCP是面向连接的，UDP是无连接的。<br>
+2.TCP首部开销20字节;UDP的首部开销小，只有8个字节。 <br>
+3.UDP程序结构较TCP更加简单。<br>
+4.TCP面向字节流，实际上是TCP把数据看成一连串无结构的字节流;UDP是面向报文的。<br>
+5.每一条TCP连接只能是点到点的;UDP支持一对一，一对多，多对一和多对多的交互通信。<br>
+6.TCP的传输可靠性比UDP更高。</p>
+<h3 id="说一下tcp粘包是怎么产生的-">说一下TCP粘包是怎么产生的</h3>
+<p>1.TCP粘包是指发送方发送的多个数据包，到接收方缓冲区首尾相连，粘成一包，被接收。<br>
+2.产生原因：TCP 协议默认使用 Nagle 算法可能会把多个数据包一次发送到接收方；应用程读取缓存中的数据包的速度小于接收数据包的速度，缓存中的多个数据包会被应用程序当成一个包一次读取。<br>
+3.解决方法：在数据包的头部定义整个数据包的长度，应用程序先读取数据包的长度，然后读取整个长度的包字节数据，保证读取的是单个包且完整。</p>
+<h3 id="osi7层每层的含义tcp4层每层的含义-">OSI7层每层的含义,TCP4层每层的含义</h3>
+<ul>
+<li>
+<p>OSI<br>
+1.物理层：主要定义物理设备标准，如网线的接口类型、光纤的接口类型、各种传输介质的传输速率等。它的主要作用是传输比特流。<br>
+2.数据链路层：定义了如何让格式化数据以进行传输，以及如何让控制对物理介质的访问，这一层通常还提供错误检测和纠正，以确保数据的可靠传输。<br>
+3.网络层：在位于不同地理位置的网络中的两个主机系统之间提供连接和路径选择，Internet的发展使得从世界各站点访问信息的用户数大大增加，而网络层正是管理这种连接的层。<br>
+4.传输层：定义了一些传输数据的协议和端口号，主要是将从下层接收的数据进行分段和传输，到达目的地址后再进行重组，常常把这一层数据叫做段。<br>
+5.会话层：通过传输层（端口号：传输端口与接收端口）建立数据传输的通路，主要在你的系统之间发起会话或者接受会话请求。<br>
+6.表示层：可确保一个系统的应用层所发送的信息可以被另一个系统的应用层读取。<br>
+7.应用层： 是最靠近用户的OSI层，这一层为用户的应用程序（例如电子邮件、文件传输和终端仿真）提供网络服务。</p>
+</li>
+<li>
+<p>TCP/IP
+1.数据链路层:实现了网卡接口的网络驱动程序，以处理数据在物理媒介（比如以太网、令牌环等）上的传输。<br>
+2.网络层：实现数据包的选路和转发。<br>
+3.传输层：为两台主机上的应用程序提供端到端（end to end）的通信。与网络层使用的逐跳通信方式不同，传输层只关心通信的起始端和目的端，而不在乎数据包的中转过程。<br>
+4.应用层：负责处理应用程序的逻辑。</p>
+</li>
+</ul>
               
             </div>
           </div>
@@ -366,7 +295,9 @@ datetime			年月日 时分秒			yyyy-MM-dd  HH:mm：ss		8字节
                   <div class="post-footer-tags">
                     <span class="text-color-light text-small">标签</span><br/>
                     
-  <a class="tag tag--primary tag--small" href="https://xhzhouup.github.io/tags/mysql/">Mysql</a>
+  <a class="tag tag--primary tag--small" href="https://xhzhouup.github.io/tags/java/">java</a>
+
+  <a class="tag tag--primary tag--small" href="https://xhzhouup.github.io/tags/tcp/udp/">TCP/UDP</a>
 
                   </div>
                 
@@ -379,7 +310,7 @@ datetime			年月日 时分秒			yyyy-MM-dd  HH:mm：ss		8字节
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/02/helloworld%E5%85%B3%E4%BA%8Ejava%E8%B5%B7%E6%AD%A5%E9%98%B6%E6%AE%B501/" data-tooltip="HelloWorld!关于Java起步阶段01">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/07/thread%E7%BA%BF%E7%A8%8B%E5%B0%8F%E7%BB%93/" data-tooltip="thread线程小结">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -387,7 +318,7 @@ datetime			年月日 时分秒			yyyy-MM-dd  HH:mm：ss		8字节
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/01/1%E5%88%86%E9%92%9F%E8%AF%BB%E6%87%82jsp%E9%9A%8F%E7%AC%94/" data-tooltip="1分钟读懂jsp(随笔)">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/05/java%E5%9F%BA%E7%A1%80%E7%AE%80%E5%8D%95%E5%B0%8F%E7%BB%93/" data-tooltip="java基础简单小结">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -405,19 +336,19 @@ datetime			年月日 时分秒			yyyy-MM-dd  HH:mm：ss		8字节
         </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://xhzhouup.github.io/2020/01/mysql%E7%9F%A5%E8%AF%8601/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://xhzhouup.github.io/2020/06/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">
               <i class="fa fa-facebook-official"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/Henryzh10839330%25!%28EXTRA%20string=https://xhzhouup.github.io/2020/01/mysql%E7%9F%A5%E8%AF%8601/%29">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/Henryzh10839330%25!%28EXTRA%20string=https://xhzhouup.github.io/2020/06/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/%29">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://xhzhouup.github.io/2020/01/mysql%E7%9F%A5%E8%AF%8601/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://xhzhouup.github.io/2020/06/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -465,7 +396,7 @@ datetime			年月日 时分秒			yyyy-MM-dd  HH:mm：ss		8字节
           
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/02/helloworld%E5%85%B3%E4%BA%8Ejava%E8%B5%B7%E6%AD%A5%E9%98%B6%E6%AE%B501/" data-tooltip="HelloWorld!关于Java起步阶段01">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/07/thread%E7%BA%BF%E7%A8%8B%E5%B0%8F%E7%BB%93/" data-tooltip="thread线程小结">
               
                   <i class="fa fa-angle-left"></i>
                   <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
@@ -473,7 +404,7 @@ datetime			年月日 时分秒			yyyy-MM-dd  HH:mm：ss		8字节
             </li>
             <li class="post-action">
               
-                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/01/1%E5%88%86%E9%92%9F%E8%AF%BB%E6%87%82jsp%E9%9A%8F%E7%AC%94/" data-tooltip="1分钟读懂jsp(随笔)">
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/05/java%E5%9F%BA%E7%A1%80%E7%AE%80%E5%8D%95%E5%B0%8F%E7%BB%93/" data-tooltip="java基础简单小结">
               
                   <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
                   <i class="fa fa-angle-right"></i>
@@ -491,19 +422,19 @@ datetime			年月日 时分秒			yyyy-MM-dd  HH:mm：ss		8字节
         </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://xhzhouup.github.io/2020/01/mysql%E7%9F%A5%E8%AF%8601/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://xhzhouup.github.io/2020/06/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">
               <i class="fa fa-facebook-official"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/Henryzh10839330%25!%28EXTRA%20string=https://xhzhouup.github.io/2020/01/mysql%E7%9F%A5%E8%AF%8601/%29">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/Henryzh10839330%25!%28EXTRA%20string=https://xhzhouup.github.io/2020/06/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/%29">
               <i class="fa fa-twitter"></i>
             </a>
           </li>
         
           <li class="post-action hide-xs">
-            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://xhzhouup.github.io/2020/01/mysql%E7%9F%A5%E8%AF%8601/">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://xhzhouup.github.io/2020/06/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/">
               <i class="fa fa-google-plus"></i>
             </a>
           </li>
@@ -533,19 +464,19 @@ datetime			年月日 时分秒			yyyy-MM-dd  HH:mm：ss		8字节
   <ul class="share-options">
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F01%2Fmysql%25E7%259F%25A5%25E8%25AF%258601%2F">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F06%2F%25E7%25BD%2591%25E7%25BB%259C%25E7%25BC%2596%25E7%25A8%258B%2F">
           <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
         </a>
       </li>
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://twitter.com/Henryzh10839330%25!%28EXTRA%20string=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F01%2Fmysql%25E7%259F%25A5%25E8%25AF%258601%2F%29">
+        <a class="share-option-btn" target="new" href="https://twitter.com/Henryzh10839330%25!%28EXTRA%20string=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F06%2F%25E7%25BD%2591%25E7%25BB%259C%25E7%25BC%2596%25E7%25A8%258B%2F%29">
           <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
         </a>
       </li>
     
       <li class="share-option">
-        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F01%2Fmysql%25E7%259F%25A5%25E8%25AF%258601%2F">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F06%2F%25E7%25BD%2591%25E7%25BB%259C%25E7%25BC%2596%25E7%25A8%258B%2F">
           <i class="fa fa-google-plus"></i><span>分享到 Google&#43;</span>
         </a>
       </li>
@@ -637,9 +568,9 @@ $(document).ready(function() {
     
       <script>
         var disqus_config = function () {
-          this.page.url = 'https:\/\/xhzhouup.github.io\/2020\/01\/mysql%E7%9F%A5%E8%AF%8601\/';
+          this.page.url = 'https:\/\/xhzhouup.github.io\/2020\/06\/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B\/';
           
-            this.page.identifier = '\/2020\/01\/mysql%E7%9F%A5%E8%AF%8601\/'
+            this.page.identifier = '\/2020\/06\/%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B\/'
           
         };
         (function() {

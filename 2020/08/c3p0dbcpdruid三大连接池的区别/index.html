@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.67.0 with theme Tranquilpeak 0.4.7-BETA">
+<meta name="author" content="周周">
+<meta name="keywords" content="DataSources">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="c3p0、dbcp、druid三大连接池的区别">
+<meta name="twitter:title" content="c3p0、dbcp、druid三大连接池的区别">
+<meta property="og:url" content="https://xhzhouup.github.io/2020/08/c3p0dbcpdruid%E4%B8%89%E5%A4%A7%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E5%8C%BA%E5%88%AB/">
+<meta property="twitter:url" content="https://xhzhouup.github.io/2020/08/c3p0dbcpdruid%E4%B8%89%E5%A4%A7%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E5%8C%BA%E5%88%AB/">
+<meta property="og:site_name" content="zhouxh&#39;s Blog">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2020-08-01T00:00:00">
+  
+  
+    <meta property="article:modified_time" content="2020-08-01T00:00:00">
+  
+  
+  
+    
+      <meta property="article:section" content="java">
+    
+      <meta property="article:section" content="database">
+    
+  
+  
+    
+      <meta property="article:tag" content="java">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=640">
+
+
+    <title>c3p0、dbcp、druid三大连接池的区别</title>
+
+    <link rel="icon" href="https://xhzhouup.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://xhzhouup.github.io/2020/08/c3p0dbcpdruid%E4%B8%89%E5%A4%A7%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E5%8C%BA%E5%88%AB/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://xhzhouup.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://xhzhouup.github.io/">zhouxh&#39;s Blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://xhzhouup.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=90" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://xhzhouup.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=110" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">周周</h4>
+        
+          <h5 class="sidebar-profile-bio">Day Day Up , 向前迈进。</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://me.csdn.net/weixin_42508999" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-link"></i>
+      
+      <span class="sidebar-button-desc">CSDN</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/xhzhouup" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/index.xml">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-rss"></i>
+      
+      <span class="sidebar-button-desc">RSS</span>
+    </a>
+  </li>
+
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      c3p0、dbcp、druid三大连接池的区别
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-08-01T00:00:00Z">
+        
+  八月 1, 2020
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://xhzhouup.github.io/categories/java">java</a>, 
+    
+      <a class="category-link" href="https://xhzhouup.github.io/categories/database">database</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <h2 id="c3p0dbcpdruid三大连接池的区别">c3p0、dbcp、druid三大连接池的区别:</h2>
+<p><strong>c3p0:</strong> c3p0是一个开放源代码的JDBC连接池，它在lib目录中与Hibernate一起发布,包括了实现jdbc3和jdbc2扩展规范说明的Connection 和Statement 池的DataSources 对象。</p>
+<p><strong>DBCP:</strong> DBCP是一个依赖Jakarta commons-pool对象池机制的数据库连接池.DBCP可以直接的在应用程序中使用，Tomcat的数据源使用的就是DBCP。</p>
+<p><strong>druid：</strong> 阿里出品，淘宝和支付宝专用数据库连接池，但它不仅仅是一个数据库连接池，它还包含一个ProxyDriver，一系列内置的JDBC组件库，一个 SQL Parser。支持所有JDBC兼容的数据库，包括Oracle、MySql、Derby、Postgresql、SQL Server、H2等等。Druid针对Oracle和MySql做了特别优化，比如Oracle的PS Cache内存占用优化，MySql的ping检测优化。Druid提供了MySql、Oracle、Postgresql、SQL-92的SQL的完整支持，这是一个手写的高性能SQL Parser，支持Visitor模式，使得分析SQL的抽象语法树很方便。简单SQL语句用时10微秒以内，复杂SQL用时30微秒。通过Druid提供的SQL Parser可以在JDBC层拦截SQL做相应处理，比如说分库分表、审计等。Druid防御SQL注入攻击的WallFilter就是通过Druid的SQL Parser分析语义实现的。</p>
+<p>​											<strong>基本配置</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>DBCP</th>
+<th>c3p0</th>
+<th>Druid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>用户名</td>
+<td>username</td>
+<td>user</td>
+<td>username</td>
+</tr>
+<tr>
+<td>密码</td>
+<td>password</td>
+<td>password</td>
+<td>password</td>
+</tr>
+<tr>
+<td>URL</td>
+<td>url</td>
+<td>jdbcUrl</td>
+<td>jdbcUrl</td>
+</tr>
+<tr>
+<td>驱动类名</td>
+<td>driverClassName</td>
+<td>driverClass</td>
+<td>driverClassName</td>
+</tr>
+</tbody>
+</table>
+<p>​											<strong>关键配置</strong></p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>DBCP</th>
+<th>c3p0</th>
+<th>Druid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>最小连接数</td>
+<td>minIdle(0)</td>
+<td>minPoolSize(3)</td>
+<td>minIdle(0)</td>
+</tr>
+<tr>
+<td>初始化连接数</td>
+<td>initialSize(0)</td>
+<td>initialPoolSize(3)</td>
+<td>initialSize(0)</td>
+</tr>
+<tr>
+<td>最大连接数</td>
+<td>maxTotal(8)</td>
+<td>maxPoolSize(15)</td>
+<td>maxActive(8)</td>
+</tr>
+<tr>
+<td>最大等待时间</td>
+<td>maxWaitMillis(毫秒)</td>
+<td>maxIdleTime(0秒)</td>
+<td>maxWait(毫秒)</td>
+</tr>
+</tbody>
+</table>
+<p>　　<strong>最小连接数:</strong></p>
+<p>　　是数据库一直保持的数据库连接数，所以如果应用程序对数据库连接的使用量不大，将有大量的数据库资源被浪费。</p>
+<p>　　<strong>初始化连接数：</strong></p>
+<p>　　连接池启动时创建的初始化数据库连接数量。</p>
+<p>　　<strong>最大连接数</strong>：</p>
+<p>　　是连接池能申请的最大连接数，如果数据库连接请求超过此数，后面的数据库连接请求被加入到等待队列中。</p>
+<p>　　<strong>最大等待时间：</strong></p>
+<p>　　当没有可用连接时，连接池等待连接被归还的最大时间，超过时间则抛出异常，可设置参数为0或者负数使得无限等待(根据不同连接池配置)。</p>
+<p>​	<strong>性能配置</strong>:<strong>预缓存设置</strong>:</p>
+<p>​	即是PSCache，PSCache对支持游标的数据库性能提升巨大，比如说oracle。JDBC的标准参数，用以控制数据源内加载的 PreparedStatements数量。但由于预缓存的statements属于单个connection而不是整个连接池，所以设置这个参数需要考 虑到多方面的因素。</p>
+<p>　　单个连接拥有的最大缓存数：要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>DBCP</th>
+<th>c3p0</th>
+<th>Druid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>开启缓存功能</td>
+<td>poolPreparedStatements</td>
+<td>maxStatements</td>
+<td>poolPreparedStatements</td>
+</tr>
+<tr>
+<td>单个连接拥有的最大缓存数</td>
+<td>maxOpenPrepared-Statements</td>
+<td>maxStatementsPer-Connection</td>
+<td>maxOpenPrepared-Statements</td>
+</tr>
+</tbody>
+</table>
+<p><strong>连接有效性检测设置:</strong></p>
+<p>​	连接池内部有机制判断，如果当前的总的连接数少于miniIdle，则会建立新的空闲连接，以保证连接数得到miniIdle。如果当前连接池中某个连接在空闲了timeBetweenEvictionRunsMillis时间后任然没有使用，则被物理性的关闭掉。有些数据库连接的时候有超时限制 （mysql连接在8小时后断开），或者由于网络中断等原因，连接池的连接会出现失效的情况，这时候设置一个testWhileIdle参数为true， 可以保证连接池内部定时检测连接的可用性，不可用的连接会被抛弃或者重建，最大情况的保证从连接池中得到的Connection对象是可用的。当然，为了 保证绝对的可用性，你也可以使用testOnBorrow为true（即在获取Connection对象时检测其可用性），不过这样会影响性能。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th><strong>DBCP</strong></th>
+<th><strong>c3p0</strong></th>
+<th><strong>Druid</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>申请连接检测</strong></td>
+<td>testOnBorrow</td>
+<td>testConnectionOnCheckin</td>
+<td>testOnBorrow</td>
+</tr>
+<tr>
+<td><strong>是否超时检测</strong></td>
+<td>testWhileIdle</td>
+<td></td>
+<td>testWhileIdle</td>
+</tr>
+<tr>
+<td><strong>空闲时间</strong></td>
+<td>timeBetweenEvictionRunsMillis</td>
+<td>idleConnectionTestPeriod</td>
+<td>timeBetweenEvictionRunsMillis</td>
+</tr>
+<tr>
+<td><strong>校验用sql语句</strong></td>
+<td>validationQuery</td>
+<td>preferredTestQuery</td>
+<td>validationQuery</td>
+</tr>
+<tr>
+<td><strong>归还连接检测</strong></td>
+<td>testOnReturn</td>
+<td>testConnectionOnCheckout</td>
+<td>testOnReturn</td>
+</tr>
+</tbody>
+</table>
+<p><strong>超时连接关闭设置</strong>:</p>
+<p>　　removeAbandoned参数，用来检测到当前使用的连接是否发生了连接泄露，所以在代码内部就假定如果一个连接建立连接的时间很长，则将其认定为泄露，继而强制将其关闭掉。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>DBCP</th>
+<th>c3p0</th>
+<th>Druid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>是否超时关闭连接</td>
+<td>removeAbandoned</td>
+<td>breakAfterAcquireFailure</td>
+<td>removeAbandoned</td>
+</tr>
+<tr>
+<td>超时时间</td>
+<td>removeAbandonedTimeout</td>
+<td>checkoutTimeout</td>
+<td>removeAbandonedTimeout</td>
+</tr>
+<tr>
+<td>是否记录日志</td>
+<td>logAbandoned</td>
+<td></td>
+<td>logAbandoned</td>
+</tr>
+</tbody>
+</table>
+<p>　<strong>c3p0重连设置:</strong></p>
+<p>　　设置获取连接失败后，是否重新连接以及间隔时间。</p>
+<table>
+<thead>
+<tr>
+<th></th>
+<th>DBCP</th>
+<th>c3p0</th>
+<th>Druid</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>重连次数</td>
+<td></td>
+<td>acquireRetryAttempts</td>
+<td></td>
+</tr>
+<tr>
+<td>间隔时间</td>
+<td></td>
+<td>acquireRetryDelay</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>DBCP 属性说明表</th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>属性(Parameter)</td>
+<td>默认值(Default)</td>
+<td>描述(Description)</td>
+</tr>
+<tr>
+<td>username</td>
+<td></td>
+<td>传递给JDBC驱动的用于建立连接的用户名</td>
+</tr>
+<tr>
+<td>password</td>
+<td></td>
+<td>传递给JDBC驱动的用于建立连接的密码</td>
+</tr>
+<tr>
+<td>url</td>
+<td></td>
+<td>传递给JDBC驱动的用于建立连接的URL</td>
+</tr>
+<tr>
+<td>driverClassName</td>
+<td></td>
+<td>使用的JDBC驱动的完整有效的java 类名</td>
+</tr>
+<tr>
+<td>defaultAutoCommit</td>
+<td>driver default</td>
+<td>连接池创建的连接的默认的auto-commit状态,没有设置则不会自动提交</td>
+</tr>
+<tr>
+<td>initialSize</td>
+<td>0</td>
+<td>初始化连接:连接池启动时创建的初始化连接数量</td>
+</tr>
+<tr>
+<td>maxTotal</td>
+<td>8</td>
+<td>最大活动连接:连接池在同一时间能够分配的最大活动连接的数量, 如果设置为非正数则表示不限制</td>
+</tr>
+<tr>
+<td>maxIdle</td>
+<td>8</td>
+<td>最大空闲连接:连接池中容许保持空闲状态的最大连接数量,超过的空闲连接将被释放,如果设置为负数表示不限制</td>
+</tr>
+<tr>
+<td>minIdle</td>
+<td>0</td>
+<td>最小空闲连接:连接池中容许保持空闲状态的最小连接数量,负数表示没有现在</td>
+</tr>
+<tr>
+<td>注意：如果在某些负载比较大的系统中将maxIdel设置过小时，很可能会出现连接关闭的同时新连接马上打开的情况.这是由于关闭连接的线程比打开的快导致的.所以，对于这种系统中,maxIdle的设定值是不同的但是通常首选默认值</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>maxWaitMillis</td>
+<td>indefinitely</td>
+<td>最大等待时间:当没有可用连接时,连接池等待连接被归还的最大时间(以毫秒计数),超过时间则抛出异常,如果设置为-1表示无限等待</td>
+</tr>
+<tr>
+<td>validationQuery</td>
+<td></td>
+<td>SQL查询,用来验证从连接池取出的连接,在将连接返回给调用者之前.如果指定,则查询必须是一个SQL SELECT并且必须返回至少一行记录</td>
+</tr>
+<tr>
+<td>testOnCreate</td>
+<td>FALSE</td>
+<td>指明是否在建立连接之后进行验证,如果验证失败,则尝试重新建立连接</td>
+</tr>
+<tr>
+<td>testOnBorrow</td>
+<td>TRUE</td>
+<td>指明是否在从池中取出连接前进行检验,如果检验失败,则从池中去除连接并尝试取出另一个. 注意: 设置为true后如果要生效,validationQuery参数必须设置为非空字符串</td>
+</tr>
+<tr>
+<td>testOnReturn</td>
+<td>FALSE</td>
+<td>指明是否在归还到池中前进行检验</td>
+</tr>
+<tr>
+<td>testWhileIdle</td>
+<td>FALSE</td>
+<td>指明连接是否被空闲连接回收器(如果有)进行检验.如果检测失败,则连接将被从池中去除. 注意: 设置为true后如果要生效,validationQuery参数必须设置为非空字符串</td>
+</tr>
+<tr>
+<td>timeBetweenEviction-RunsMillis</td>
+<td>-1</td>
+<td>在空闲连接回收器线程运行期间休眠的时间值,以毫秒为单位.如果设置为非正数,则不运行空闲连接回收器线程</td>
+</tr>
+<tr>
+<td>numTestsPerEvictionRun</td>
+<td>3</td>
+<td>在每次空闲连接回收器线程(如果有)运行时检查的连接数量</td>
+</tr>
+<tr>
+<td>minEvictableIdleTime-Millis</td>
+<td>1000<em>60</em>30</td>
+<td>连接在池中保持空闲而不被空闲连接回收器线程(如果有)回收的最小时间值，单位毫秒</td>
+</tr>
+<tr>
+<td>softMiniEvictableIdle- TimeMillis</td>
+<td>-1</td>
+<td>说明:连接在有资格被空闲连接逐出器逐出之前在池中空闲的最短时间，附加条件是至少有“minIdle”连接保留在池中。当minievetableidletimillis设置为正值时，首先由空闲连接收回器检查minievetableidletimillis，即当收回器访问空闲连接时，首先将空闲时间与minievetableidletimillis（不考虑池中空闲连接的数量）进行比较，然后与softminevictableidletimillis（包括minIdle约束）进行比较</td>
+</tr>
+<tr>
+<td>maxConnLifetimeMillis</td>
+<td>-1</td>
+<td>说明:连接的最大生存期（毫秒）。超过此时间后，连接将无法通过下一次激活、钝化或验证测试。值为零或更小表示连接具有无限的生存期。</td>
+</tr>
+<tr>
+<td>logExpiredConnections</td>
+<td>TRUE</td>
+<td>说明:用于记录一条消息的标志，该消息指示由于超过maxConnLifetimeMillis，连接正被池关闭。将此属性设置为false可禁止默认打开的过期连接日志记录。</td>
+</tr>
+<tr>
+<td>connectionInitSqls</td>
+<td>null</td>
+<td>说明:第一次创建物理连接时将用于初始化物理连接的SQL语句的集合。这些语句仅在配置的连接工厂创建连接时执行一次。</td>
+</tr>
+<tr>
+<td>info</td>
+<td>TRUE</td>
+<td>说明:True表示borrowObject返回池中最近使用的（“last-in”）连接（如果有空闲连接可用）。False表示池的行为与FIFO队列一样-按照将连接返回到池的顺序从空闲实例池中获取连接。</td>
+</tr>
+<tr>
+<td>poolPreparedState-ments</td>
+<td>FALSE</td>
+<td>开启池的prepared statement 池功能</td>
+</tr>
+<tr>
+<td>maxOpenPreparedState-ments</td>
+<td>unlimited</td>
+<td>statement池能够同时分配的打开的statements的最大数量, 如果设置为0表示不限制</td>
+</tr>
+<tr>
+<td>注意-确保您的连接为其他语句留有一些资源。共用PreparedStatements可能会使其游标在数据库中保持打开状态，从而导致连接用完游标，特别是如果maxOpenPreparedStatements保留为默认值（不受限制），并且应用程序在每个连接中打开大量不同的PreparedStatements。为了避免这个问题，maxOpenPreparedStatements应该设置为小于连接上可以打开的最大游标数的值。</td>
+<td></td>
+<td></td>
+</tr>
+<tr>
+<td>accessToUnderlyingConnectionAllowed</td>
+<td>FALSE</td>
+<td>控制PoolGuard是否容许获取底层连接,默认false不开启, 这是一个有潜在危险的功能, 不适当的编码会造成伤害.(关闭底层连接或者在守护连接已经关闭的情况下继续使用它).请谨慎使用,并且仅当需要直接访问驱动的特定功能时使用.注意: 不要关闭底层连接, 只能关闭前面的那个.</td>
+</tr>
+<tr>
+<td>removeAbandoned</td>
+<td>FALSE</td>
+<td>标记是否删除泄露的连接,如果他们超过了removeAbandonedTimout的限制.如果设置为true, 连接被认为是被泄露并且可以被删除,如果空闲时间超过removeAbandonedTimeout. 设置为true可以为写法糟糕的没有关闭连接的程序修复数据库连接.</td>
+</tr>
+<tr>
+<td>removeAbandonedTimeout</td>
+<td>300</td>
+<td>泄露的连接可以被删除的超时值, 单位秒</td>
+</tr>
+<tr>
+<td>logAbandoned</td>
+<td>FALSE</td>
+<td>标记当Statement或连接被泄露时是否打印程序的stack traces日志。被泄露的Statements和连接的日志添加在每个连接打开或者生成新的Statement,因为需要生成stack trace。</td>
+</tr>
+<tr>
+<td>abandonedUsageTracking</td>
+<td>FALSE</td>
+<td>如果为true, 那么连接池会记录每个方法调用时候的堆栈信息以及废弃连接的调试信息</td>
+</tr>
+<tr>
+<td>注:如果开启&quot;removeAbandoned&rdquo;,那么连接在被认为泄露时可能被池回收. 这个机制在(getNumIdle() &lt; 2)and (getNumActive() &gt; getMaxActive() - 3)时被触发. 举例当maxActive=20, 活动连接为18,空闲连接为1时可以触发&quot;removeAbandoned&rdquo;.但是活动连接只有在没有被使用的时间超过&quot;removeAbandonedTimeout&quot;时才被删除,默认300秒.在resultset中游历不被计算为被使用.</td>
+<td></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><strong>C3P0 属性说明表</strong></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>属性(Parameter)</td>
+<td>默认值(Default)</td>
+<td>描述(Description)</td>
+</tr>
+<tr>
+<td>user</td>
+<td></td>
+<td>同DBCP中的username属性</td>
+</tr>
+<tr>
+<td>password</td>
+<td></td>
+<td>同DBCP中的password属性</td>
+</tr>
+<tr>
+<td>jdbcUrl</td>
+<td></td>
+<td>同DBCP中的jdbcUrl属性</td>
+</tr>
+<tr>
+<td>driverClass</td>
+<td></td>
+<td>同DBCP中的driverClass属性</td>
+</tr>
+<tr>
+<td>autoCommitOnClose</td>
+<td>false</td>
+<td>默认值false表示回滚任何未提交的任务,设置为true则全部提交,而不是在关闭连接之前回滚</td>
+</tr>
+<tr>
+<td>initialPoolSize</td>
+<td>3</td>
+<td>初始化连接:连接池启动时创建的初始化连接数量</td>
+</tr>
+<tr>
+<td>maxPoolSize</td>
+<td>15</td>
+<td>连接池中保留的最大连接数  *参见DBCP中的maxIdle属性</td>
+</tr>
+<tr>
+<td>minPoolSize</td>
+<td>3</td>
+<td>连接池中保留的最小连接数  *参见DBCP中的maxIdle属性</td>
+</tr>
+<tr>
+<td>maxIdleTime</td>
+<td>0</td>
+<td>最大等待时间:当没有可用连接时,连接池等待连接被归还的最大时间(以秒计数),超过时间则抛出异常,如果设置为0表示无限等待   *参见DBCP中maxWaitMillis 属性</td>
+</tr>
+<tr>
+<td>preferredTestQuery</td>
+<td>null</td>
+<td>定义所有连接测试都执行的测试语句。在使用连接测试的情况下这个一显著提高测试速度。注意：测试的表必须在初始数据源的时候就存在。</td>
+</tr>
+<tr>
+<td>testConnectionOn- Checkin</td>
+<td>false</td>
+<td>如果设为true那么在取得连接的同时将校验连接的有效性。   *参见DBCP中的testOnBorrow属性</td>
+</tr>
+<tr>
+<td>testConnectionOn- Checkout</td>
+<td>false</td>
+<td>如果设为true那么在每个connection提交的时候都将校验其有效性,但是要确保配置的preferredTestQuery的有效性    *参见DBCP中的testOnBorrow属性</td>
+</tr>
+<tr>
+<td>idleConnectionTest- Period</td>
+<td>0</td>
+<td>如果设置大于0,表示过了多少秒检查一次空闲连接,结合testConnectionOnCheckin以及testConnectionOnCheckout使用</td>
+</tr>
+<tr>
+<td>acquireRetryAttempts</td>
+<td>30</td>
+<td>定义在从数据库获取新连接失败后重复尝试的次数, 如果小于0则表示无限制的连接。</td>
+</tr>
+<tr>
+<td>acquireRetryDelay</td>
+<td>1000</td>
+<td>两次连接中的间隔时间，单位毫秒。</td>
+</tr>
+<tr>
+<td>breakAfterAcquire- Failure</td>
+<td>false</td>
+<td>获取连接失败将会引起所有等待连接池来获取连接的线程抛出异常。但是数据源仍有效保留，并在下次调用 getConnection() 的时候继续尝试获取连接。如果为 true，那么在尝试获取连接失败后该数据源将声明已断开并永久关闭。</td>
+</tr>
+<tr>
+<td>checkoutTimeout</td>
+<td>0</td>
+<td>当连接池用完时客户端调用 getConnection() 后等待获取新连接的时间，潮湿后将抛出SQLException，如设为0，则为无限期等待。单位毫秒。</td>
+</tr>
+<tr>
+<td>maxStatements</td>
+<td>0</td>
+<td>控制数据源内加载的PreparedStatements数量</td>
+</tr>
+<tr>
+<td>maxStatementsPer- Connection</td>
+<td>0</td>
+<td>定义了连接池内单个连接所拥有的最大缓存statements数</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th><strong>DRUID 属性说明表</strong></th>
+<th></th>
+<th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>属性(Parameter)</td>
+<td>默认值(Default)</td>
+<td>描述(Description)</td>
+</tr>
+<tr>
+<td>username</td>
+<td></td>
+<td>连接数据库的用户名</td>
+</tr>
+<tr>
+<td>password</td>
+<td></td>
+<td>连接数据库的密码</td>
+</tr>
+<tr>
+<td>jdbcUrl</td>
+<td></td>
+<td>同DBCP中的jdbcUrl属性</td>
+</tr>
+<tr>
+<td>driverClassName</td>
+<td>根据url自动识别</td>
+<td>这一项可配可不配，如果不配置druid会根据url自动识别dbType，然后选择相应的driverClassName</td>
+</tr>
+<tr>
+<td>initialSize</td>
+<td>0</td>
+<td>初始化时建立物理连接的个数。初始化发生在显示调用init方法，或者第一次getConnection时 *参见DBCP中的initialSize属性</td>
+</tr>
+<tr>
+<td>maxActive</td>
+<td>8</td>
+<td>最大连接池数量(Maximum number of Connections a pool will maintain at any given time.) *参见DBCP中的maxTotal属性</td>
+</tr>
+<tr>
+<td>maxIdle</td>
+<td>8</td>
+<td>已经不再使用，配置了也没效果*参见DBCP中的maxIdle属性</td>
+</tr>
+<tr>
+<td>minIdle</td>
+<td></td>
+<td>最小连接池数量</td>
+</tr>
+<tr>
+<td>maxWait</td>
+<td></td>
+<td>获取连接时最大等待时间，单位毫秒。配置了maxWait之后，缺省启用公平锁，并发效率会有所下降，如果需要可以通过配置useUnfairLock属性为true使用非公平锁。</td>
+</tr>
+<tr>
+<td>poolPreparedState- ments</td>
+<td>false</td>
+<td>是否缓存preparedStatement，也就是PSCache。PSCache对支持游标的数据库性能提升巨大，比如说oracle。</td>
+</tr>
+<tr>
+<td>maxOpenPrepared- Statements</td>
+<td>-1</td>
+<td>要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100</td>
+</tr>
+<tr>
+<td>testOnBorrow</td>
+<td>true</td>
+<td>申请连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能。</td>
+</tr>
+<tr>
+<td>testOnReturn</td>
+<td>false</td>
+<td>归还连接时执行validationQuery检测连接是否有效，做了这个配置会降低性能</td>
+</tr>
+<tr>
+<td>testWhileIdle</td>
+<td>false</td>
+<td>建议配置为true，不影响性能，并且保证安全性。申请连接的时候检测，如果空闲时间大于timeBetweenEvictionRunsMillis，执行validationQuery检测连接是否有效。</td>
+</tr>
+<tr>
+<td>validationQuery</td>
+<td></td>
+<td>用来检测连接是否有效的sql，要求是一个查询语句。如果validationQuery为null，testOnBorrow、testOnReturn、 testWhileIdle都不会其作用。在mysql中通常为select &lsquo;x&rsquo;，在oracle中通常为select 1 from dual</td>
+</tr>
+<tr>
+<td>timeBetweenEviction-RunsMillis</td>
+<td></td>
+<td>1.Destroy线程会检测连接的间隔时间  2.testWhileIdle的判断依据</td>
+</tr>
+<tr>
+<td>minEvictableIdle- TimeMillis</td>
+<td></td>
+<td>Destory线程中如果检测到当前连接的最后活跃时间和当前时间的差值大于minEvictableIdleTimeMillis，则关闭当前连接。</td>
+</tr>
+<tr>
+<td>removeAbandoned</td>
+<td></td>
+<td>对于建立时间超过removeAbandonedTimeout的连接强制关闭</td>
+</tr>
+<tr>
+<td>removeAbandoned-Timeout</td>
+<td></td>
+<td>指定连接建立多长时间就需要被强制关闭</td>
+</tr>
+<tr>
+<td>logAbandoned</td>
+<td>false</td>
+<td>指定发生removeabandoned的时候，是否记录当前线程的堆栈信息到日志中</td>
+</tr>
+<tr>
+<td>filters</td>
+<td></td>
+<td>属性类型是字符串，通过别名的方式配置扩展插件，常用的插件有： 1.监控统计用的filter:stat 2.日志用的filter:log4j 3.防御sql注入的filter:wall</td>
+</tr>
+</tbody>
+</table>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://xhzhouup.github.io/tags/java/">java</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/07/thread%E7%BA%BF%E7%A8%8B%E5%B0%8F%E7%BB%93/" data-tooltip="thread线程小结">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://xhzhouup.github.io/2020/08/c3p0dbcpdruid%E4%B8%89%E5%A4%A7%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E5%8C%BA%E5%88%AB/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/Henryzh10839330%25!%28EXTRA%20string=https://xhzhouup.github.io/2020/08/c3p0dbcpdruid%E4%B8%89%E5%A4%A7%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E5%8C%BA%E5%88%AB/%29">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://xhzhouup.github.io/2020/08/c3p0dbcpdruid%E4%B8%89%E5%A4%A7%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E5%8C%BA%E5%88%AB/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 周周. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/07/thread%E7%BA%BF%E7%A8%8B%E5%B0%8F%E7%BB%93/" data-tooltip="thread线程小结">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://xhzhouup.github.io/2020/08/c3p0dbcpdruid%E4%B8%89%E5%A4%A7%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E5%8C%BA%E5%88%AB/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/Henryzh10839330%25!%28EXTRA%20string=https://xhzhouup.github.io/2020/08/c3p0dbcpdruid%E4%B8%89%E5%A4%A7%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E5%8C%BA%E5%88%AB/%29">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://xhzhouup.github.io/2020/08/c3p0dbcpdruid%E4%B8%89%E5%A4%A7%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E5%8C%BA%E5%88%AB/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F08%2Fc3p0dbcpdruid%25E4%25B8%2589%25E5%25A4%25A7%25E8%25BF%259E%25E6%258E%25A5%25E6%25B1%25A0%25E7%259A%2584%25E5%258C%25BA%25E5%2588%25AB%2F">
+          <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/Henryzh10839330%25!%28EXTRA%20string=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F08%2Fc3p0dbcpdruid%25E4%25B8%2589%25E5%25A4%25A7%25E8%25BF%259E%25E6%258E%25A5%25E6%25B1%25A0%25E7%259A%2584%25E5%258C%25BA%25E5%2588%25AB%2F%29">
+          <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F08%2Fc3p0dbcpdruid%25E4%25B8%2589%25E5%25A4%25A7%25E8%25BF%259E%25E6%258E%25A5%25E6%25B1%25A0%25E7%259A%2584%25E5%258C%25BA%25E5%2588%25AB%2F">
+          <i class="fa fa-google-plus"></i><span>分享到 Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=110" alt="作者的图片" />
+    
+    <h4 id="about-card-name">周周</h4>
+    
+      <div id="about-card-bio">Day Day Up , 向前迈进。</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Java攻城狮
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        chengdu，China
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://xhzhouup.github.io/images/timg1.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://xhzhouup.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/xhzhouup.github.io\/2020\/08\/c3p0dbcpdruid%E4%B8%89%E5%A4%A7%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E5%8C%BA%E5%88%AB\/';
+          
+            this.page.identifier = '\/2020\/08\/c3p0dbcpdruid%E4%B8%89%E5%A4%A7%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E5%8C%BA%E5%88%AB\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+
