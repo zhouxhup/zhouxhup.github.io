@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    
+    <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="generator" content="Hugo 0.67.0 with theme Tranquilpeak 0.4.7-BETA">
+<meta name="author" content="周周">
+<meta name="keywords" content="java, pageHelper, pageInfo">
+<meta name="description" content="">
+
+
+<meta property="og:description" content="">
+<meta property="og:type" content="article">
+<meta property="og:title" content="pageInfo遇见total不对问题">
+<meta name="twitter:title" content="pageInfo遇见total不对问题">
+<meta property="og:url" content="https://xhzhouup.github.io/2020/12/pageinfo%E9%81%87%E8%A7%81total%E4%B8%8D%E5%AF%B9%E9%97%AE%E9%A2%98/">
+<meta property="twitter:url" content="https://xhzhouup.github.io/2020/12/pageinfo%E9%81%87%E8%A7%81total%E4%B8%8D%E5%AF%B9%E9%97%AE%E9%A2%98/">
+<meta property="og:site_name" content="zhouxh&#39;s Blog">
+<meta property="og:description" content="">
+<meta name="twitter:description" content="">
+<meta property="og:locale" content="zh-cn">
+
+  
+    <meta property="article:published_time" content="2020-12-22T16:28:40">
+  
+  
+    <meta property="article:modified_time" content="2020-12-22T16:28:40">
+  
+  
+  
+    
+      <meta property="article:section" content="java">
+    
+      <meta property="article:section" content="Essays">
+    
+  
+  
+    
+      <meta property="article:tag" content="Essays">
+    
+  
+
+
+<meta name="twitter:card" content="summary">
+
+
+
+
+
+
+
+
+
+
+
+  <meta property="og:image" content="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=640">
+  <meta property="twitter:image" content="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=640">
+
+
+    <title>pageInfo遇见total不对问题</title>
+
+    <link rel="icon" href="https://xhzhouup.github.io/favicon.png">
+    
+
+    
+
+    <link rel="canonical" href="https://xhzhouup.github.io/2020/12/pageinfo%E9%81%87%E8%A7%81total%E4%B8%8D%E5%AF%B9%E9%97%AE%E9%A2%98/">
+
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/jquery.fancybox.min.css" integrity="sha256-vuXZ9LGmmwtjqFX1F+EKin1ThZMub58gKULUyf0qECk=" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.4/helpers/jquery.fancybox-thumbs.min.css" integrity="sha256-SEa4XYAHihTcEP1f5gARTB2K26Uk8PsndQYHQC1f4jU=" crossorigin="anonymous" />
+    
+    
+    <link rel="stylesheet" href="https://xhzhouup.github.io/css/style-twzjdbqhmnnacqs0pwwdzcdbt8yhv8giawvjqjmyfoqnvazl0dalmnhdkvp7.min.css" />
+    
+    
+
+    
+      
+    
+    
+  </head>
+
+  <body>
+    <div id="blog">
+      <header id="header" data-behavior="4">
+  <i id="btn-open-sidebar" class="fa fa-lg fa-bars"></i>
+  <div class="header-title">
+    <a class="header-title-link" href="https://xhzhouup.github.io/">zhouxh&#39;s Blog</a>
+  </div>
+  
+    
+      <a class="header-right-picture "
+         href="https://xhzhouup.github.io/#about">
+    
+    
+    
+      
+        <img class="header-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=90" alt="作者的图片" />
+      
+    
+    </a>
+  
+</header>
+
+      <nav id="sidebar" data-behavior="4">
+  <div class="sidebar-container">
+    
+      <div class="sidebar-profile">
+        <a href="https://xhzhouup.github.io/#about">
+          <img class="sidebar-profile-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=110" alt="作者的图片" />
+        </a>
+        <h4 class="sidebar-profile-name">周周</h4>
+        
+          <h5 class="sidebar-profile-bio">Day Day Up , 向前迈进。</h5>
+        
+      </div>
+    
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-home"></i>
+      
+      <span class="sidebar-button-desc">首页</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/categories">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-bookmark"></i>
+      
+      <span class="sidebar-button-desc">分类</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/tags">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-tags"></i>
+      
+      <span class="sidebar-button-desc">标签</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/archives">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-archive"></i>
+      
+      <span class="sidebar-button-desc">归档</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://xhzhouup.github.io/#about">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-question"></i>
+      
+      <span class="sidebar-button-desc">关于</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://me.csdn.net/weixin_42508999" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-link"></i>
+      
+      <span class="sidebar-button-desc">CSDN</span>
+    </a>
+  </li>
+
+  <li class="sidebar-button">
+    
+      <a class="sidebar-button-link " href="https://github.com/xhzhouup" target="_blank" rel="noopener">
+    
+      <i class="sidebar-button-icon fa fa-lg fa-github"></i>
+      
+      <span class="sidebar-button-desc">GitHub</span>
+    </a>
+  </li>
+
+
+    </ul>
+    <ul class="sidebar-buttons">
+      
+
+    </ul>
+  </div>
+</nav>
+
+      
+
+      <div id="main" data-behavior="4"
+        class="
+               hasCoverMetaIn
+               ">
+        <article class="post" itemscope itemType="http://schema.org/BlogPosting">
+          
+          
+            <div class="post-header main-content-wrap text-left">
+  
+    <h1 class="post-title" itemprop="headline">
+      pageInfo遇见total不对问题
+    </h1>
+  
+  
+  <div class="postShorten-meta post-meta">
+    
+      <time itemprop="datePublished" datetime="2020-12-22T16:28:40&#43;08:00">
+        
+  十二月 22, 2020
+
+      </time>
+    
+    
+  
+  
+    <span>发布在</span>
+    
+      <a class="category-link" href="https://xhzhouup.github.io/categories/java">java</a>, 
+    
+      <a class="category-link" href="https://xhzhouup.github.io/categories/essays">Essays</a>
+    
+  
+
+  </div>
+
+</div>
+          
+          <div class="post-content markdown" itemprop="articleBody">
+            <div class="main-content-wrap">
+              <h2 id="pageinfo相关注意事项">pageInfo相关注意事项</h2>
+<p>欸 朋友们好啊
+我是中科软一名java小员工，目前正在北京总部出差
+刚才有同事问我分页查询用的pageInfo啦？
+我说怎么回事
+然后给我发了几张他postman测试接口截图
+我一看
+哦
+原来是前两天
+他分页查询用了个插件
+一个是pageHelper
+一个是插件的pageInfo类
+当他今天测试接口的时候发现
+返回的数据总条数和数据库总条数对应不上
+我去看我的分页查询逻辑，发现不对劲
+经过我仔细研究，我发现：</p>
+<pre><code>    //设置分页 pageNo-当前页数 pageSize-每页显示数据总数
+    PageHelper.startPage(pageNo, pageSize);
+
+    //进入数据库查询列表数据 pageHelper在这里做一次拦截器操作
+    List&lt;ListVo&gt; listVos = renewalDetailsMapper.queryList(dto);
+
+    //使用PageInfo包装返回数据结果
+    PageInfo&lt;ListVo&gt; pageInfo = new PageInfo&lt;&gt;(listVos);
+
+</code></pre><p>这三行语句必须写在一起 这样total才是总数
+<!-- raw HTML omitted -->  插件中间只能有一次查询语句，不能再做其他处理代码（两行代码之间不能再有其他代码）！ <!-- raw HTML omitted --></p>
+<p>我原来写法是先查出列表数据，然后调用其他服务进行具体字段的值转化，最终再用pageInfo接收并返回：</p>
+<pre><code>    //设置分页 pageNo-当前页数 pageSize-每页显示数据总数
+    PageHelper.startPage(pageNo, pageSize);
+
+    //进入数据库查询列表数据 pageHelper在这里做一次拦截器操作
+    List&lt;Do&gt; listVos = renewalDetailsMapper.queryList(dto);
+
+    List&lt;ListVo&gt; vos=new ArrayList&lt;&gt;();
+    //循环列表处理具体
+    listVos.forEach(do -&gt; {
+
+        //具体处理代理。。。
+        vos.add();
+
+    });
+
+    //使用PageInfo包装返回数据结果
+    PageInfo&lt;ListVo&gt; pageInfo = new PageInfo&lt;&gt;(vos);
+</code></pre><p>这样的写法，在pageInfo接收返回数据的代码中，自己新建了个返回vo的list。破坏了原有的total数，
+pageInfo.getTotal()一直是当前的 pageSize的总数，而不是查询的符合条件的数据库总条数。</p>
+<p><!-- raw HTML omitted -->注意：PageHelper只对紧跟着的第一个SQL语句起作用<!-- raw HTML omitted --></p>
+<p>发现了问题，下面就可以着手解决</p>
+<p><strong>方法1:</strong></p>
+<pre><code>    //设置分页 pageNo-当前页数 pageSize-每页显示数据总数
+    Page page = PageHelper.startPage(pageNo, pageSize);
+
+    //进入数据库查询列表数据 pageHelper在这里做一次拦截器操作
+    List&lt;Do&gt; listVos = renewalDetailsMapper.queryList(dto);
+
+   List&lt;ListVo&gt; vos=new ArrayList&lt;&gt;();
+    //循环列表处理具体
+    listVos.forEach(do -&gt; {
+
+        //具体处理代理。。。
+        vos.add();
+
+    });
+
+    //使用PageInfo包装返回数据结果
+    PageInfo&lt;ListVo&gt; pageInfo = new PageInfo&lt;&gt;(vos);
+
+    //手动设值  
+    pageInfo.setPages(page.getPages());//总页数
+    pageInfo.setTotal(page.getTotal());//总条数
+</code></pre><p><!-- raw HTML omitted -->PageHelper.startPage会返回一个page对象，这个对象在查询结果出来后会把页数，记录总数给page对象,用page.getPages()和getTotal()获取页数和记录总数.<!-- raw HTML omitted --></p>
+<p><strong>方法2：</strong></p>
+<pre><code>    //设置分页 pageNo-当前页数 pageSize-每页显示数据总数
+    PageHelper.startPage(pageNo, pageSize);
+
+    //进入数据库查询列表数据 pageHelper在这里做一次拦截器操作
+    List&lt;Do&gt; listVos = renewalDetailsMapper.queryList(dto);
+
+    //使用PageInfo包装返回数据结果
+    PageInfo&lt;Do&gt; pageInfo = new PageInfo&lt;&gt;(vos);
+
+    List&lt;ListVo&gt; vos=new ArrayList&lt;&gt;();
+
+    //循环列表处理具体
+    listVos.forEach(do -&gt; {
+
+        //具体处理代理。。。
+        vos.add();
+
+    });
+    PageInfo&lt;ListVo&gt; page= new PageInfo&lt;&gt;(volist);
+    BeanUtils.copyProperties(pageInfo,page);
+
+</code></pre><p>啊
+我大意了啊
+没有闪
+这个分页插件
+不讲武德
+来 骗 偷袭
+我这个连续12天加班深夜的老同志
+这好吗
+这不好
+欸
+我劝各位年轻人
+耗子尾汁
+不要直接拿到pageHepler插件就直接用
+一定要记住total这个坑
+谢谢朋友们</p>
+<h6 id="springboot集成mybatis的pagehelper插件jar包">springboot集成mybatis的pagehelper插件jar包</h6>
+<pre><code>&lt;!--引入PageHelper分页插件 → PageHelper--&gt;
+      &lt;dependency&gt;
+          &lt;groupId&gt;com.github.pagehelper&lt;/groupId&gt;
+          &lt;artifactId&gt;pagehelper&lt;/artifactId&gt;
+          &lt;version&gt;5.1.2&lt;/version&gt;
+      &lt;/dependency&gt;
+      &lt;dependency&gt;
+          &lt;groupId&gt;com.github.pagehelper&lt;/groupId&gt;
+          &lt;artifactId&gt;pagehelper-spring-boot-autoconfigure&lt;/artifactId&gt;
+          &lt;version&gt;1.2.5&lt;/version&gt;
+      &lt;/dependency&gt;
+
+      &lt;dependency&gt;
+          &lt;groupId&gt;com.github.pagehelper&lt;/groupId&gt;
+          &lt;artifactId&gt;pagehelper-spring-boot-starter&lt;/artifactId&gt;
+          &lt;version&gt;1.2.5&lt;/version&gt;
+      &lt;/dependency&gt;
+</code></pre><h6 id="注这三个依赖引入后可以不用再单独做插件的集成配置使用pagehepler时尽量把上文三行代码写在一起并且一定要有顺序">注：这三个依赖引入后，可以不用再单独做插件的集成配置。使用pageHepler时尽量把上文三行代码写在一起，并且一定要有顺序！！！</h6>
+<!-- raw HTML omitted -->
+<p>最后附上一篇在csdn看到过较详细的相关介绍：https://blog.csdn.net/eson_15/article/details/52270046?utm_medium=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromBaidu-1.control&amp;depth_1-utm_source=distribute.pc_relevant_t0.none-task-blog-BlogCommendFromBaidu-1.control</p>
+<h6 id="写在最后从进入到中科软以来已经有很久很久没有更新博客了一方面是由于自己变得懒惰了罪过罪过另一方面零碎时间学习新内容不系统导致无法梳理知识精华多多抱歉">写在最后：从进入到中科软以来，已经有很久很久没有更新博客了，一方面是由于自己变得懒惰了（罪过罪过），另一方面零碎时间学习新内容不系统，导致无法梳理知识精华。多多抱歉！</h6>
+              
+            </div>
+          </div>
+          <div id="post-footer" class="post-footer main-content-wrap">
+            
+              
+                
+                
+                  <div class="post-footer-tags">
+                    <span class="text-color-light text-small">标签</span><br/>
+                    
+  <a class="tag tag--primary tag--small" href="https://xhzhouup.github.io/tags/essays/">Essays</a>
+
+                  </div>
+                
+              
+            
+            <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/08/c3p0dbcpdruid%E4%B8%89%E5%A4%A7%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E5%8C%BA%E5%88%AB/" data-tooltip="c3p0、dbcp、druid三大连接池的区别">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://xhzhouup.github.io/2020/12/pageinfo%E9%81%87%E8%A7%81total%E4%B8%8D%E5%AF%B9%E9%97%AE%E9%A2%98/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/Henryzh10839330%25!%28EXTRA%20string=https://xhzhouup.github.io/2020/12/pageinfo%E9%81%87%E8%A7%81total%E4%B8%8D%E5%AF%B9%E9%97%AE%E9%A2%98/%29">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://xhzhouup.github.io/2020/12/pageinfo%E9%81%87%E8%A7%81total%E4%B8%8D%E5%AF%B9%E9%97%AE%E9%A2%98/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+            
+              
+                <div id="disqus_thread">
+  <noscript>Please enable JavaScript to view the <a href="//disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</div>
+              
+            
+          </div>
+        </article>
+        <footer id="footer" class="main-content-wrap">
+  <span class="copyrights">
+    &copy; 2020 周周. All Rights Reserved
+  </span>
+</footer>
+
+      </div>
+      <div id="bottom-bar" class="post-bottom-bar" data-behavior="4">
+        <div class="post-actions-wrap">
+  
+      <nav >
+        <ul class="post-actions post-action-nav">
+          
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--disabled">
+              
+                  <i class="fa fa-angle-left"></i>
+                  <span class="hide-xs hide-sm text-small icon-ml">下一篇</span>
+                </a>
+            </li>
+            <li class="post-action">
+              
+                <a class="post-action-btn btn btn--default tooltip--top" href="https://xhzhouup.github.io/2020/08/c3p0dbcpdruid%E4%B8%89%E5%A4%A7%E8%BF%9E%E6%8E%A5%E6%B1%A0%E7%9A%84%E5%8C%BA%E5%88%AB/" data-tooltip="c3p0、dbcp、druid三大连接池的区别">
+              
+                  <span class="hide-xs hide-sm text-small icon-mr">上一篇</span>
+                  <i class="fa fa-angle-right"></i>
+                </a>
+            </li>
+          
+        </ul>
+      </nav>
+    <ul class="post-actions post-action-share" >
+      
+        <li class="post-action hide-lg hide-md hide-sm">
+          <a class="post-action-btn btn btn--default btn-open-shareoptions" href="#btn-open-shareoptions">
+            <i class="fa fa-share-alt"></i>
+          </a>
+        </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https://xhzhouup.github.io/2020/12/pageinfo%E9%81%87%E8%A7%81total%E4%B8%8D%E5%AF%B9%E9%97%AE%E9%A2%98/">
+              <i class="fa fa-facebook-official"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://twitter.com/Henryzh10839330%25!%28EXTRA%20string=https://xhzhouup.github.io/2020/12/pageinfo%E9%81%87%E8%A7%81total%E4%B8%8D%E5%AF%B9%E9%97%AE%E9%A2%98/%29">
+              <i class="fa fa-twitter"></i>
+            </a>
+          </li>
+        
+          <li class="post-action hide-xs">
+            <a class="post-action-btn btn btn--default" target="new" href="https://plus.google.com/share?url=https://xhzhouup.github.io/2020/12/pageinfo%E9%81%87%E8%A7%81total%E4%B8%8D%E5%AF%B9%E9%97%AE%E9%A2%98/">
+              <i class="fa fa-google-plus"></i>
+            </a>
+          </li>
+        
+      
+      
+        <li class="post-action">
+          <a class="post-action-btn btn btn--default" href="#disqus_thread">
+            <i class="fa fa-comment-o"></i>
+          </a>
+        </li>
+      
+      <li class="post-action">
+        
+          <a class="post-action-btn btn btn--default" href="#">
+        
+          <i class="fa fa-list"></i>
+        </a>
+      </li>
+    </ul>
+  
+</div>
+
+      </div>
+      <div id="share-options-bar" class="share-options-bar" data-behavior="4">
+  <i id="btn-close-shareoptions" class="fa fa-close"></i>
+  <ul class="share-options">
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://www.facebook.com/sharer/sharer.php?u=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F12%2Fpageinfo%25E9%2581%2587%25E8%25A7%2581total%25E4%25B8%258D%25E5%25AF%25B9%25E9%2597%25AE%25E9%25A2%2598%2F">
+          <i class="fa fa-facebook-official"></i><span>分享到 Facebook</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://twitter.com/Henryzh10839330%25!%28EXTRA%20string=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F12%2Fpageinfo%25E9%2581%2587%25E8%25A7%2581total%25E4%25B8%258D%25E5%25AF%25B9%25E9%2597%25AE%25E9%25A2%2598%2F%29">
+          <i class="fa fa-twitter"></i><span>分享到 Twitter</span>
+        </a>
+      </li>
+    
+      <li class="share-option">
+        <a class="share-option-btn" target="new" href="https://plus.google.com/share?url=https%3A%2F%2Fxhzhouup.github.io%2F2020%2F12%2Fpageinfo%25E9%2581%2587%25E8%25A7%2581total%25E4%25B8%258D%25E5%25AF%25B9%25E9%2597%25AE%25E9%25A2%2598%2F">
+          <i class="fa fa-google-plus"></i><span>分享到 Google&#43;</span>
+        </a>
+      </li>
+    
+  </ul>
+</div>
+<div id="share-options-mask" class="share-options-mask"></div>
+    </div>
+    
+    <div id="about">
+  <div id="about-card">
+    <div id="about-btn-close">
+      <i class="fa fa-remove"></i>
+    </div>
+    
+      <img id="about-card-picture" src="https://www.gravatar.com/avatar/21e708bc234fbd032bec4f73537cc0f5?s=110" alt="作者的图片" />
+    
+    <h4 id="about-card-name">周周</h4>
+    
+      <div id="about-card-bio">Day Day Up , 向前迈进。</div>
+    
+    
+      <div id="about-card-job">
+        <i class="fa fa-briefcase"></i>
+        <br/>
+        Java攻城狮
+      </div>
+    
+    
+      <div id="about-card-location">
+        <i class="fa fa-map-marker"></i>
+        <br/>
+        Chengdu，China
+      </div>
+    
+  </div>
+</div>
+
+    
+
+    
+  
+    
+      <div id="cover" style="background-image:url('https://xhzhouup.github.io/images/timg1.jpg');"></div>
+    
+  
+
+
+    
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.2.4/jquery.min.js" integrity="sha256-BbhdlvQf/xTY9gja0Dq3HiwQF8LaCRTXxZKRutelT44=" crossorigin="anonymous"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js" integrity="sha256-/BfiIkHlHoVihZdc6TFuj7MmJ0TWcWsMXkeDFwhi0zw=" crossorigin="anonymous"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.7/js/jquery.fancybox.min.js" integrity="sha256-GEAnjcTqVP+vBp3SSc8bEDQqvWAZMiHyUSIorrWwH50=" crossorigin="anonymous"></script>
+
+
+<script src="https://xhzhouup.github.io/js/script-pcw6v3xilnxydl1vddzazdverrnn9ctynvnxgwho987mfyqkuylcb1nlt.min.js"></script>
+
+
+<script lang="javascript">
+window.onload = updateMinWidth;
+window.onresize = updateMinWidth;
+document.getElementById("sidebar").addEventListener("transitionend", updateMinWidth);
+function updateMinWidth() {
+  var sidebar = document.getElementById("sidebar");
+  var main = document.getElementById("main");
+  main.style.minWidth = "";
+  var w1 = getComputedStyle(main).getPropertyValue("min-width");
+  var w2 = getComputedStyle(sidebar).getPropertyValue("width");
+  var w3 = getComputedStyle(sidebar).getPropertyValue("left");
+  main.style.minWidth = `calc(${w1} - ${w2} - ${w3})`;
+}
+</script>
+
+<script>
+$(document).ready(function() {
+  hljs.configure({ classPrefix: '', useBR: false });
+  $('pre.code-highlight > code, pre > code').each(function(i, block) {
+    if (!$(this).hasClass('codeblock')) {
+      $(this).addClass('codeblock');
+    }
+    hljs.highlightBlock(block);
+  });
+});
+</script>
+
+
+  
+    
+      <script>
+        var disqus_config = function () {
+          this.page.url = 'https:\/\/xhzhouup.github.io\/2020\/12\/pageinfo%E9%81%87%E8%A7%81total%E4%B8%8D%E5%AF%B9%E9%97%AE%E9%A2%98\/';
+          
+            this.page.identifier = '\/2020\/12\/pageinfo%E9%81%87%E8%A7%81total%E4%B8%8D%E5%AF%B9%E9%97%AE%E9%A2%98\/'
+          
+        };
+        (function() {
+          
+          
+          if (window.location.hostname == "localhost") {
+            return;
+          }
+          var d = document, s = d.createElement('script');
+          var disqus_shortname = 'hugo-tranquilpeak-theme';
+          s.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+
+          s.setAttribute('data-timestamp', +new Date());
+          (d.head || d.body).appendChild(s);
+        })();
+      </script>
+    
+  
+
+
+
+
+    
+  </body>
+</html>
+
